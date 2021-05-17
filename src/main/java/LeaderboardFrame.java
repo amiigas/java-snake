@@ -3,7 +3,6 @@ package main.java;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -14,8 +13,6 @@ public class LeaderboardFrame extends JFrame {
     public static final int FRAME_WIDTH = 300;
     public static final int FRAME_HEIGTH = 400;
     public static final String leaderboardFilename = "leaderboard.txt";
-
-    JList leaderboard;
 
     LeaderboardFrame() {
         this.setTitle("Snake - Leaderboard");
@@ -29,12 +26,12 @@ public class LeaderboardFrame extends JFrame {
 
     private void layoutComponents() {
         Score[] entries = getLeaderboardEntries();
-        JList<Score> list = new JList<Score>(entries);
-        list.setCellRenderer(new CellRenderer());
+        JList<Score> leaderboard = new JList<Score>(entries);
+        leaderboard.setCellRenderer(new CellRenderer());
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setViewportView(list);
+        scrollPane.setViewportView(leaderboard);
         scrollPane.setBounds(0,0, FRAME_WIDTH, FRAME_HEIGTH);
-        list.setLayoutOrientation(JList.VERTICAL);
+        leaderboard.setLayoutOrientation(JList.VERTICAL);
 
         this.add(scrollPane);
     }

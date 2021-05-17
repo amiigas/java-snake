@@ -33,6 +33,6 @@ public class GameFrame extends JFrame {
     }
 
     private void createDeathFrame() {
-        DeathFrame deathFrame = new DeathFrame();
+        new DeathFrame();
     }
 }
