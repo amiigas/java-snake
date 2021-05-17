@@ -11,7 +11,7 @@ import javax.swing.JScrollPane;
 
 public class LeaderboardFrame extends JFrame {
     
-    public static final int FRAME_WIDTH = 200;
+    public static final int FRAME_WIDTH = 300;
     public static final int FRAME_HEIGTH = 400;
     public static final String leaderboardFilename = "leaderboard.txt";
 
@@ -28,8 +28,9 @@ public class LeaderboardFrame extends JFrame {
     }
 
     private void layoutComponents() {
-        String[] entries = getLeaderboardEntries();
-        JList<String> list = new JList<String>(entries);
+        Score[] entries = getLeaderboardEntries();
+        JList<Score> list = new JList<Score>(entries);
+        list.setCellRenderer(new CellRenderer());
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(list);
         scrollPane.setBounds(0,0, FRAME_WIDTH, FRAME_HEIGTH);
@@ -38,21 +39,22 @@ public class LeaderboardFrame extends JFrame {
         this.add(scrollPane);
     }
 
-    private String[] getLeaderboardEntries() {
-        List<String> lines = new ArrayList<String>();
+    private Score[] getLeaderboardEntries() {
+        ArrayList<Score> scores = new ArrayList<Score>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(leaderboardFilename));
             String line;
             while ((line = reader.readLine()) != null) {
-                // String[] data = line.split(",");
-                lines.add(line);
+                String[] data = line.split(",");
+                scores.add(new Score(data[0], Integer.parseInt(data[1])));
             }
             reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String[] result = new String[ lines.size() ];
-        lines.toArray(result);
+        scores.sort((o1, o2) -> -Integer.compare(o1.points, o2.points));
+        Score[] result = new Score[ scores.size() ];
+        scores.toArray(result);
         return result;
     }
 }

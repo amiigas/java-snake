@@ -45,15 +45,14 @@ public class DeathFrame extends JFrame {
     }
 
     private void submitScore() {
-        System.out.println("Submiting " + nameTextField.getText());
-        this.saveScore(nameTextField.getText());
+        this.saveScore(nameTextField.getText(), 20);
         this.dispose();
     }
 
-    private void saveScore(String name) {
+    private void saveScore(String name, int points) {
         try {
             FileWriter myWriter = new FileWriter(leaderboardFilename, true);
-            myWriter.write(name + "," + "\n");
+            myWriter.write(name + "," + points + "\n");
             myWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
