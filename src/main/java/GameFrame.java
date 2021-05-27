@@ -1,41 +1,36 @@
 package main.java;
-import java.util.concurrent.TimeUnit;
-import javax.swing.JButton;
-import java.awt.EventQueue;
 import javax.swing.*;
 
+
 public class GameFrame extends JFrame {
-
     public static final int FRAME_WIDTH = 600;
-    public static final int FRAME_HEIGTH = 600;
+    public static final int FRAME_HEIGHT = 600;
+    private Game game;
 
-    // int score;
-    
     public GameFrame() {
-    	
-    	
         this.setTitle("Snake - Play");
-        this.setSize(FRAME_WIDTH, FRAME_HEIGTH);
-        
-     
-        JPanel panel = new ScreenPanel();
-        add(panel);
-        
-        pack();
+        this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setVisible(true);
-        setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setResizable(false);
-        
+        this.setResizable(false);
+
+        ScreenPanel screenPanel = new ScreenPanel(FRAME_WIDTH, FRAME_HEIGHT);
+        this.add(screenPanel);
+        this.pack();
       
-        
         // temporary to force game over
         JButton dedButton = new JButton();
         dedButton.setBounds(40, 100, 100, 100);
         dedButton.setText("I DED");
         dedButton.addActionListener(e -> gameOver());
-        this.setLayout(null);
         this.add(dedButton);
+        
+        game = new Game();
+        game.initialize();
+        game.start();
+        
+        screenPanel.updateBoard(game.board);
     }
 
     private void gameOver() {

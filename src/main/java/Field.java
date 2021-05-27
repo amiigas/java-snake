@@ -1,39 +1,41 @@
 package main.java;
-import javax.swing.*;
-
-
 import java.awt.*;
+
+enum FieldType {
+	EMPTY,
+	SNAKE,
+	PYTHON,
+	FROG,
+	FRUIT,
+	WALL
+}
 
 public class Field {
 	private final int x, y;
-	private final int width=10 , height = 10;
-	private FieldStatus fieldStatus=FieldStatus.EMPTY;
+	private final int WIDTH = 10;
+	private final int HEIGHT = 10;
+	private FieldType type;
 	protected Image icon;
 	
 	public Field(int x, int y) {
-		this.x = x*width;
-		this.y = y*height;
-		this.fieldStatus = FieldStatus.EMPTY;
+		this.x = x * WIDTH;
+		this.y = y * HEIGHT;
+		this.type = FieldType.EMPTY;
 	}
 	
 	public int GetX(){
 		return x;
 	}
+
 	public int GetY(){
 		return y;
 	}
-//	public Rectangle FieldRectangle()
-//	{
-//		return new Rectangle(x,y,width,height);
-//	}
 	
-	public void changeFieldStatus(FieldStatus fieldStatus) {
-		this.fieldStatus = fieldStatus;
+	public void setType(FieldType type) {
+		this.type = type;
 	}
 	
-	public FieldStatus getFieldStatus() {
-		return fieldStatus;
+	public FieldType getType() {
+		return type;
 	}
-
-	
 }
