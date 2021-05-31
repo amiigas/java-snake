@@ -19,9 +19,15 @@ public class Frog extends BoardComponent implements Runnable {
                 row = this.game.board.getRandomRow();
                 col = this.game.board.getRandomCol();
             }
+            // 1. setting field type for render
             fields[row][col].setType(FieldType.FROG);
+            // 2. setting object's position (currently unused)
             this.setPosition(row, col);
         }
+    }
+
+    private void hop() {
+        // TODO
     }
 
     private void setPosition(int row, int col) {
@@ -33,22 +39,40 @@ public class Frog extends BoardComponent implements Runnable {
         }
     }
 
+    private void finished() {
+        this.aquireProcessed();
+        this.awaitRendered();
+    }
+
+    private void aquireProcessed() {
+        synchronized (this.game) {
+            try {
+                this.game.processed.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void awaitRendered() {
+        this.game.renderLock.lock();
+        try {
+            this.game.rendered.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            this.game.renderLock.unlock();
+        }
+    }
+
     @Override
     public void run() {
         System.out.printf("Frog started running with game at %s\n", this.game);
         while (true) {
-            Coordinate c = this.position.get(0);
-            try {
-                synchronized (this.game.board) {
-                    System.out.printf("Fruit s %d", c.j);
-                    Field[][] fields = this.game.board.getFields();
-                    fields[c.i][c.j+1].setType(FieldType.FRUIT);
-                }
-                c.j++;
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (this.game.board) {
+                // hop();
             }
+            this.finished();
         }
     }
 }

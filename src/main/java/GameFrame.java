@@ -33,15 +33,29 @@ public class GameFrame extends JFrame {
 
         game = new Game();
         game.initialize();
+        this.screenPanel.updateBoard(game.board);
+        SwingUtilities.updateComponentTreeUI(this.screenPanel);
         startRenderLoop();
     }
 
     private void startRenderLoop() {
         while(true) {
             try {
-                Thread.sleep(100);
-                this.screenPanel.updateBoard(game.board);
-                SwingUtilities.updateComponentTreeUI(this);
+                Thread.sleep(300);
+                synchronized (this.game.processed) {
+                    // if no more permits == all threads finished
+                    if (this.game.processed.availablePermits() == 0) {
+                        // update and render
+                        this.screenPanel.updateBoard(game.board);
+                        SwingUtilities.updateComponentTreeUI(this.screenPanel);
+                        // release permits for semaphore
+                        this.game.processed.release(2);
+                        // signal all threads that rendering finished
+                        this.game.renderLock.lock();
+                        this.game.rendered.signalAll();
+                        this.game.renderLock.unlock();
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

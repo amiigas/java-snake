@@ -33,8 +33,37 @@ public class Fruit extends BoardComponent implements Runnable {
         }
     }
 
+    private void finished() {
+        this.aquireProcessed();
+        this.awaitRendered();
+    }
+
+    private void aquireProcessed() {
+        synchronized (this.game) {
+            try {
+                this.game.processed.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void awaitRendered() {
+        this.game.renderLock.lock();
+        try {
+            this.game.rendered.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            this.game.renderLock.unlock();
+        }
+    }
+
     @Override
     public void run() {
         System.out.printf("Fruit started running with game at %s\n", this.game);
+        while (true) {
+            this.finished();
+        }
     }
 }

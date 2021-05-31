@@ -1,9 +1,15 @@
 package main.java;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.*;
 
 public class Game {
     public Board board;
     public boolean isOver;
     public int score;
+    final Semaphore processed = new Semaphore(2, true);
+    final Lock renderLock = new ReentrantLock();
+    final Condition rendered  = renderLock.newCondition();
+
     Thread frogThread;
     Thread fruitThread;
 
