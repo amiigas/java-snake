@@ -36,11 +36,5 @@ public class Fruit extends BoardComponent implements Runnable {
     @Override
     public void run() {
         System.out.printf("Fruit started running with game at %s\n", this.game);
-        this.spawn();
-
-        // while (true) {
-        //     Coordinate c = this.position.get(0);
-
-        // }
     }
 }

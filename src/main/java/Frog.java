@@ -36,6 +36,19 @@ public class Frog extends BoardComponent implements Runnable {
     @Override
     public void run() {
         System.out.printf("Frog started running with game at %s\n", this.game);
-        this.spawn();
+        while (true) {
+            Coordinate c = this.position.get(0);
+            try {
+                synchronized (this.game.board) {
+                    System.out.printf("Fruit s %d", c.j);
+                    Field[][] fields = this.game.board.getFields();
+                    fields[c.i][c.j+1].setType(FieldType.FRUIT);
+                }
+                c.j++;
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

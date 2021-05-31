@@ -6,26 +6,15 @@ public class ScreenPanel extends JPanel {
 	private Image fruit;
 	private Image wall;
 	private Image frog;
-    private Board board;
+    private Board board = new Board(60, 60);
 	
-	public ScreenPanel(int width, int height) {
+	public ScreenPanel() {
         this.setBackground(Color.black);
         this.setFocusable(true);
-        this.setPreferredSize(new Dimension(width, height));
         this.loadIcons();
         repaint();
-//        timer.schedule(myTask, 2000, 2000);
-        // repaint();
-        
     }
-    
-//    Timer timer = new Timer();
-//    TimerTask myTask = new TimerTask() {
-//        @Override
-//        public void run() {
-//        	board.moveFrog("South");
-//        }
-//    };
+
     public void updateBoard(Board board) {
         this.board = board;
     }
@@ -41,7 +30,6 @@ public class ScreenPanel extends JPanel {
         ImageIcon ifrog = new ImageIcon("src/main/frog.png");
         frog = ifrog.getImage();
     }
-    
     
     @Override
     public void paintComponent(Graphics g) {

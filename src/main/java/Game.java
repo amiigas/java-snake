@@ -4,6 +4,8 @@ public class Game {
     public Board board;
     public boolean isOver;
     public int score;
+    Thread frogThread;
+    Thread fruitThread;
 
     public Game() {
         this.board = new Board(60, 60);
@@ -12,19 +14,19 @@ public class Game {
     }
     
     public void initialize() {
+        Fruit fruit = new Fruit(this);
+        Frog frog = new Frog(this);
+
+        this.fruitThread = new Thread(fruit, "fruit");
+        this.frogThread = new Thread(frog, "frog");
+
         board.spawnObstacles(5);
-        // board.spawnFruit();
-        // board.spawnFrog();
+        fruit.spawn();
+        frog.spawn();
     }
 
-    public void start() {
-        Runnable fruit = new Fruit(this);
-        Runnable frog = new Frog(this);
-
-        Thread t1 = new Thread(fruit, "fruit");
-        Thread t2 = new Thread(frog, "frog");
-
-        t1.start();
-        t2.start();
+    public void start() {        
+        this.fruitThread.start();
+        this.frogThread.start();
     }
 }
