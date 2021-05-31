@@ -8,9 +8,6 @@ public class GameFrame extends JFrame implements KeyListener {
     public static final int SCREEN_WIDTH = 600;
     public static final int SCREEN_HEIGHT = 600;
     private Game game;
-    JButton newGameButton;
-    JButton leaderboardButton;
-    JButton gameOverButton;
     JPanel buttonsPanel;
     ScreenPanel screenPanel;
     LeaderboardFrame leaderboardFrame;
@@ -37,8 +34,8 @@ public class GameFrame extends JFrame implements KeyListener {
         this.pack();
         this.setVisible(true);
 
-        game = new Game();
-        game.initialize();
+        this.game = new Game();
+        this.game.initialize();
         this.screenPanel.updateBoard(game.board);
         SwingUtilities.updateComponentTreeUI(this.screenPanel);
         startRenderLoop();
@@ -69,24 +66,24 @@ public class GameFrame extends JFrame implements KeyListener {
     }
 
     private void startGame() {
-        game.start();
+        this.game.start();
     }
 
     private JPanel layoutButtons() {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(1, 3));
 
-        this.newGameButton = new JButton();
-        this.newGameButton.setText("START");
-        this.newGameButton.addActionListener(e -> startGame());
+        JButton newGameButton = new JButton();
+        newGameButton.setText("START");
+        newGameButton.addActionListener(e -> startGame());
 
-        this.gameOverButton = new JButton();
-        this.gameOverButton.setText("GAME OVER");
-        this.gameOverButton.addActionListener(e -> gameOver());
+        JButton gameOverButton = new JButton();
+        gameOverButton.setText("GAME OVER");
+        gameOverButton.addActionListener(e -> gameOver());
         
-        this.leaderboardButton = new JButton();
-        this.leaderboardButton.setText("LEADERBOARD");
-        this.leaderboardButton.addActionListener(e -> showLeaderboard());
+        JButton leaderboardButton = new JButton();
+        leaderboardButton.setText("LEADERBOARD");
+        leaderboardButton.addActionListener(e -> showLeaderboard());
 
         buttonsPanel.add(newGameButton);
         buttonsPanel.add(gameOverButton);
@@ -119,7 +116,6 @@ public class GameFrame extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int kc = e.getKeyCode();
         if (kc >= 37 && kc <= 40) {
-            System.out.println(kc);
             this.direction = kc;
         }
     }
