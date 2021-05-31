@@ -1,8 +1,10 @@
 package main.java;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements KeyListener {
     public static final int SCREEN_WIDTH = 600;
     public static final int SCREEN_HEIGHT = 600;
     private Game game;
@@ -12,6 +14,7 @@ public class GameFrame extends JFrame {
     JPanel buttonsPanel;
     ScreenPanel screenPanel;
     LeaderboardFrame leaderboardFrame;
+    int direction;
 
     public GameFrame() {
         this.setTitle("Snake - Play");
@@ -19,6 +22,9 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
+        this.setFocusable(true);
+        this.addKeyListener(this);
+        this.setFocusTraversalKeysEnabled(false);
 
         Container pane = this.getContentPane();
         this.buttonsPanel = this.layoutButtons();
@@ -103,5 +109,22 @@ public class GameFrame extends JFrame {
 
     private void createDeathFrame() {
         new DeathFrame();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int kc = e.getKeyCode();
+        if (kc >= 37 && kc <= 40) {
+            System.out.println(kc);
+            this.direction = kc;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }
