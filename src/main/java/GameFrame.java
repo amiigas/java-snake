@@ -74,14 +74,17 @@ public class GameFrame extends JFrame implements KeyListener {
 
         JButton newGameButton = new JButton();
         newGameButton.setText("START");
+        newGameButton.setFocusable(false);
         newGameButton.addActionListener(e -> startGame());
 
         JButton gameOverButton = new JButton();
         gameOverButton.setText("GAME OVER");
+        gameOverButton.setFocusable(false);
         gameOverButton.addActionListener(e -> gameOver());
         
         JButton leaderboardButton = new JButton();
         leaderboardButton.setText("LEADERBOARD");
+        leaderboardButton.setFocusable(false);
         leaderboardButton.addActionListener(e -> showLeaderboard());
 
         buttonsPanel.add(newGameButton);

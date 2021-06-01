@@ -46,11 +46,24 @@ public class Snake extends BoardComponent implements Runnable {
         synchronized (this.game.board) {
             Coordinate c = this.position.get(0);
             Field[][] fields = this.game.board.getFields();
-            if (this.game.snakeDirection == 38) {
-                Coordinate newHead = new Coordinate(c.i, c.j-1);
-                fields[c.i][c.j-1].setType(FieldType.SNAKE);
-                this.position.add(0, newHead);
+            int dx = 0;
+            int dy = 0;
+            if (this.game.snakeDirection == 37) {
+                // left
+                dx = -1;
+            } else if (this.game.snakeDirection == 38) {
+                // up
+                dy = -1;
+            } else if (this.game.snakeDirection == 39) {
+                // right
+                dx = 1;
+            } else if (this.game.snakeDirection == 40) {
+                // down
+                dy = 1;
             }
+            Coordinate newHead = new Coordinate(c.i+dx, c.j+dy);
+            fields[c.i+dx][c.j+dy].setType(FieldType.SNAKE);
+            this.position.add(0, newHead);
         }
     }
 
