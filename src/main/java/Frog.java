@@ -5,7 +5,7 @@ public class Frog extends BoardComponent implements Runnable {
     private Game game;
 
     public Frog(Game game) {
-        type = ComponentType.FROG;
+        this.type = ComponentType.FROG;
         this.game = game;
         this.position = new ArrayList<Coordinate>();
     }

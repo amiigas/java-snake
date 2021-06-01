@@ -11,7 +11,6 @@ public class GameFrame extends JFrame implements KeyListener {
     JPanel buttonsPanel;
     ScreenPanel screenPanel;
     LeaderboardFrame leaderboardFrame;
-    int direction;
 
     public GameFrame() {
         this.setTitle("Snake - Play");
@@ -52,7 +51,7 @@ public class GameFrame extends JFrame implements KeyListener {
                         this.screenPanel.updateBoard(game.board);
                         SwingUtilities.updateComponentTreeUI(this.screenPanel);
                         // release permits for semaphore
-                        this.game.processed.release(2);
+                        this.game.processed.release(3);
                         // signal all threads that rendering finished
                         this.game.renderLock.lock();
                         this.game.rendered.signalAll();
@@ -116,7 +115,9 @@ public class GameFrame extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int kc = e.getKeyCode();
         if (kc >= 37 && kc <= 40) {
-            this.direction = kc;
+            synchronized (this.game) {
+                this.game.snakeDirection = kc;
+            }
         }
     }
 
