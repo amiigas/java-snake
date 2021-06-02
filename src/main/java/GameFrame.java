@@ -76,11 +76,6 @@ public class GameFrame extends JFrame implements KeyListener {
         newGameButton.setText("START");
         newGameButton.setFocusable(false);
         newGameButton.addActionListener(e -> startGame());
-
-        // JButton gameOverButton = new JButton();
-        // gameOverButton.setText("NEW GAME");
-        // gameOverButton.setFocusable(false);
-        // gameOverButton.addActionListener(e -> newGame());
         
         JButton leaderboardButton = new JButton();
         leaderboardButton.setText("LEADERBOARD");
@@ -88,7 +83,6 @@ public class GameFrame extends JFrame implements KeyListener {
         leaderboardButton.addActionListener(e -> showLeaderboard());
 
         buttonsPanel.add(newGameButton);
-        // buttonsPanel.add(gameOverButton);
         buttonsPanel.add(leaderboardButton);
 
         return buttonsPanel;
@@ -104,11 +98,6 @@ public class GameFrame extends JFrame implements KeyListener {
     private void startGame() {
         this.game.start();
     }
-
-    // private void newGame() {
-    //     this.game = new Game();
-    //     this.game.initialize();
-    // }
 
     private void gameOver() {
         this.createDeathFrame();
