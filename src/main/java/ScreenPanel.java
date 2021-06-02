@@ -48,8 +48,8 @@ public class ScreenPanel extends JPanel {
     public void printDrawings(Graphics g) {
     	Field[][] fields = board.getFields();
         g.setColor(this.getBackground());
-    	for (int i=0; i<board.rows-1; i++) {
-    		for (int j=0; j<board.cols-1; j++) {
+    	for (int i=0; i<board.rows; i++) {
+    		for (int j=0; j<board.cols; j++) {
                 if (fields[i][j].getType() == FieldType.EMPTY) {
                     g.fillRect(fields[i][j].GetX(), fields[i][j].GetY(), 10, 10);
     			}
