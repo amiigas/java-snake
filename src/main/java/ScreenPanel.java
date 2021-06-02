@@ -7,6 +7,7 @@ public class ScreenPanel extends JPanel {
 	private Image fruit;
 	private Image wall;
 	private Image frog;
+	private Image python;
     private Board board = new Board(60, 60);
 	
 	public ScreenPanel() {
@@ -24,6 +25,9 @@ public class ScreenPanel extends JPanel {
 
         ImageIcon isnake = new ImageIcon("src/main/snake.png");
         snake = isnake.getImage();
+        
+        ImageIcon ipython = new ImageIcon("src/main/python.png");
+        python = ipython.getImage();
  
         ImageIcon ifruit = new ImageIcon("src/main/fruit.png");
         fruit = ifruit.getImage();
@@ -60,6 +64,9 @@ public class ScreenPanel extends JPanel {
     			}
     			if (fields[i][j].getType() == FieldType.FROG) {
     				g.drawImage(frog, fields[i][j].GetX(), fields[i][j].GetY(), this);
+    			}
+    			if (fields[i][j].getType() == FieldType.PYTHON) {
+    				g.drawImage(python, fields[i][j].GetX(), fields[i][j].GetY(), this);
     			}
     		}
     	}

@@ -26,22 +26,25 @@ public class GameFrame extends JFrame implements KeyListener {
         this.buttonsPanel = this.layoutButtons();
         pane.add(buttonsPanel, BorderLayout.PAGE_START);
 
-        this.screenPanel = new ScreenPanel();
-        this.screenPanel.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        pane.add(screenPanel, BorderLayout.CENTER);
-
-        this.pack();
-        this.setVisible(true);
-
-        this.game = new Game();
-        this.game.initialize();
-        this.screenPanel.updateBoard(game.board);
-        SwingUtilities.updateComponentTreeUI(this.screenPanel);
-        startRenderLoop();
+        while(true) {
+	        this.screenPanel = new ScreenPanel();
+	        this.screenPanel.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+	        pane.add(screenPanel, BorderLayout.CENTER);
+	
+	        this.pack();
+	        this.setVisible(true);
+	
+	        this.game = new Game();
+	        this.game.initialize();
+	        this.screenPanel.updateBoard(game.board);
+	        SwingUtilities.updateComponentTreeUI(this.screenPanel);
+	        startRenderLoop();
+	        this.gameOver();
+        }
     }
 
     private void startRenderLoop() {
-        while(true) {
+        while(this.game.isOver==false) {
             try {
                 Thread.sleep(300);
                 synchronized (this.game.processed) {

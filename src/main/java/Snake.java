@@ -29,16 +29,45 @@ public class Snake extends BoardComponent implements Runnable {
     }
 
     private void move() {
+    	
         this.deleteTail();
         this.moveHead();
+        
     }
+    
+    private void checkApple(int x, int y) {
+    	synchronized (this.game.board) {
+    		Field[][] fields = this.game.board.getFields();
+	    	if (fields[x][y].getType() == FieldType.FRUIT){
+	    		fields[x][y].setType(FieldType.EMPTY);
+	    		this.game.fruitEaten = true;
+	    		this.game.snakeBigger = true;
+	    		
+	    	}
+    	}
+    }
+    
+    private void checkCollision(int x, int y) {
+    	synchronized (this.game.board) {
+    		Field[][] fields = this.game.board.getFields();
+	    	if (fields[x][y].getType() == FieldType.WALL){
+	    		this.game.isOver = true;
+	    	}
+    	}
+    }
+    
+    
 
     private void deleteTail() {
         synchronized (this.game.board) {
-            Coordinate c = this.position.get(this.position.size()-1);
-            Field[][] fields = this.game.board.getFields();
-            fields[c.i][c.j].setType(FieldType.EMPTY);
-            this.position.remove(this.position.size()-1);
+        	if(this.game.snakeBigger == false) {
+	            Coordinate c = this.position.get(this.position.size()-1);
+	            Field[][] fields = this.game.board.getFields();
+	            fields[c.i][c.j].setType(FieldType.EMPTY);
+	            this.position.remove(this.position.size()-1);
+        	}
+        	else
+        		this.game.snakeBigger = false;
         }
     }
 
@@ -62,6 +91,8 @@ public class Snake extends BoardComponent implements Runnable {
                 dy = 1;
             }
             Coordinate newHead = new Coordinate(c.i+dx, c.j+dy);
+            this.checkCollision(c.i+dx, c.j+dy);
+            this.checkApple(c.i+dx, c.j+dy);
             fields[c.i+dx][c.j+dy].setType(FieldType.SNAKE);
             this.position.add(0, newHead);
         }
@@ -100,7 +131,7 @@ public class Snake extends BoardComponent implements Runnable {
     @Override
     public void run() {
         System.out.printf("Snake started running with game at %s\n", this.game);
-        while (true) {
+        while (this.game.isOver == false) {
             this.move();
             this.finished();
         }

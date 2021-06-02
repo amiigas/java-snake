@@ -52,59 +52,17 @@ public class Board {
 			}
 		}
     }
-
-//   public void moveFrog(String Direction) {
-//	   int FrogX = -1;
-//	   int FrogY = -1;
-//	   for (int i=0; i < this.rows-1; i++) {
-//   			for (int j=0; j < this.cols-1; j++) {
-//   		
-//   				if (fields[i][j].getFieldStatus() == FieldStatus.FROG) {
-//   					FrogX = i;
-//   					FrogY = j;
-//   				}
-//   			}
-//	   }
-//	   if (FrogX != -1){
-//		   if (FrogX > 1 && fields[FrogX-1][FrogY].getFieldStatus() == FieldStatus.EMPTY) {
-//			   if (Direction == "West")
-//			   {
-//				   fields[FrogX][FrogY].changeFieldStatus(FieldStatus.EMPTY);
-//				   FrogX = FrogX-1;
-//				   fields[FrogX][FrogY].changeFieldStatus(FieldStatus.FROG);
-//				   
-//			   }
-//				   
-//		   }
-//		   if (FrogY > 1 && fields[FrogX][FrogY-1].getFieldStatus() == FieldStatus.EMPTY) {
-//			   if (Direction == "North")
-//			   {
-//				   fields[FrogX][FrogY].changeFieldStatus(FieldStatus.EMPTY);
-//				   FrogY = FrogY-1;
-//				   fields[FrogX][FrogY].changeFieldStatus(FieldStatus.FROG);
-//				   
-//			   }
-//		   }
-//		   if (FrogX < this.cols && fields[FrogX+1][FrogY].getFieldStatus() == FieldStatus.EMPTY) {
-//			   if (Direction == "East")
-//			   {
-//				   fields[FrogX][FrogY].changeFieldStatus(FieldStatus.EMPTY);
-//				   FrogX = FrogX+1;
-//				   fields[FrogX][FrogY].changeFieldStatus(FieldStatus.FROG);
-//				   
-//			   }
-//		   }
-//		   if (FrogY < this.rows && fields[FrogX][FrogY+1].getFieldStatus() == FieldStatus.EMPTY) {
-//			   if (Direction == "South")
-//			   {
-//				   fields[FrogX][FrogY].changeFieldStatus(FieldStatus.EMPTY);
-//				   FrogY = FrogY+1;
-//				   fields[FrogX][FrogY].changeFieldStatus(FieldStatus.FROG);
-//				   
-//			   }
-//		   }
-//		      
-//	   }
-//	   
-//   }
+    
+    public Coordinate findType(FieldType fieldType) {
+    	Coordinate c = new Coordinate(-1,-1);
+    	for (int i=0; i<rows-1;i++) {
+    		for (int j=0; j<cols-1; j++) {
+    			if(fields[i][j].getType() == fieldType) {
+    				Coordinate d = new Coordinate(i,j);
+    				return d;
+    			}
+    		}
+    	}
+    	return c;
+    }
 }

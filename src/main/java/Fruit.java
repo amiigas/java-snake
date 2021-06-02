@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Fruit extends BoardComponent implements Runnable {
     private Game game;
+    public boolean isWorking = true;
 
     public Fruit(Game game) {
         this.type = ComponentType.FRUIT;
@@ -62,8 +63,13 @@ public class Fruit extends BoardComponent implements Runnable {
     @Override
     public void run() {
         System.out.printf("Fruit started running with game at %s\n", this.game);
-        while (true) {
-            this.finished();
+        while(true) {
+        	while (this.game.fruitEaten == false) {
+        		this.finished();
+        	}
+        	this.spawn();
+        	this.game.fruitEaten = false;
+        	
         }
     }
 }
