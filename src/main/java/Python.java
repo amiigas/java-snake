@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Python extends BoardComponent implements Runnable {
     private Game game;
+	private boolean makeBigger = false;
     private int GoUp = 0;
     private int GoDown = 0;
     private int GoLeft = 0;
@@ -12,6 +13,7 @@ public class Python extends BoardComponent implements Runnable {
         this.type = ComponentType.PYTHON;
         this.game = game;
         this.position = new ArrayList<Coordinate>();
+		this.makeBigger = false;
     }
 
     public void spawn() {
@@ -33,10 +35,12 @@ public class Python extends BoardComponent implements Runnable {
     }
 
     private void move() {
-    	
-        this.deleteTail();
+    	if (!this.makeBigger) {
+            this.deleteTail();
+        } else {
+            this.makeBigger = false;
+        }
         this.moveHead();
-        
     }
     
     private void checkApple(int x, int y) {
@@ -44,29 +48,20 @@ public class Python extends BoardComponent implements Runnable {
     		Field[][] fields = this.game.board.getFields();
 	    	if (fields[x][y].getType() == FieldType.FRUIT){
 	    		fields[x][y].setType(FieldType.EMPTY);
-	    		this.game.fruitEaten = true;
-	    		this.game.pythonBigger = true;
-	    		
+	    		// this.game.fruitEaten = true;
+	    		this.makeBigger = true;
 	    	}
     	}
     }
-    
-    
 
     private void deleteTail() {
         synchronized (this.game.board) {
-        	if(this.game.pythonBigger == false) {
-	            Coordinate c = this.position.get(this.position.size()-1);
-	            Field[][] fields = this.game.board.getFields();
-	            fields[c.i][c.j].setType(FieldType.EMPTY);
-	            this.position.remove(this.position.size()-1);
-        	}
-        	else
-        		this.game.pythonBigger = false;
+			Coordinate c = this.position.get(this.position.size()-1);
+			Field[][] fields = this.game.board.getFields();
+			fields[c.i][c.j].setType(FieldType.EMPTY);
+			this.position.remove(this.position.size()-1);
         }
     }
-    
-    
     
     private boolean checkWalls(int x, int y) {
     	boolean wall = false;
@@ -79,24 +74,20 @@ public class Python extends BoardComponent implements Runnable {
     	return wall;
     }
     
-    
     private void decide_l_r(int i, int j) {
-    	
     	for(int k=1;k<9;k++) {
    		 if(this.checkWalls(i, j+k) == false) {
-   			 this.GoDown = k;
-   			 break;
+   			this.GoDown = k;
+   			break;
    		 }
    		 if(this.checkWalls(i, j-k) == false) {
    			this.GoUp = k;
-   			 break;
+   			break;
    		 }
    	 }
-    	
     }
     
     private void decide_u_d(int i, int j) {
-    	
     	for(int k=1;k<9;k++) {
    		 if(this.checkWalls(i+k, j) == false) {
    			 this.GoRight = k;
@@ -197,9 +188,7 @@ public class Python extends BoardComponent implements Runnable {
 	                     }
 	                 } 
 	            }
-	            
             }
-            
            
             Coordinate newHead = new Coordinate(c.i+dx, c.j+dy);
             this.checkApple(c.i+dx, c.j+dy);
@@ -241,9 +230,10 @@ public class Python extends BoardComponent implements Runnable {
     @Override
     public void run() {
         System.out.printf("Python started running with game at %s\n", this.game);
-        while (this.game.isOver == false) {
+        while (!this.game.isOver) {
             this.move();
             this.finished();
         }
+        System.out.println("Python stopped running.");
     }
 }

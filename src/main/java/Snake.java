@@ -3,11 +3,13 @@ import java.util.ArrayList;
 
 public class Snake extends BoardComponent implements Runnable {
     private Game game;
+    private boolean makeBigger;
 
     public Snake(Game game) {
         this.type = ComponentType.SNAKE;
         this.game = game;
         this.position = new ArrayList<Coordinate>();
+        this.makeBigger = false;
     }
 
     public void spawn() {
@@ -15,6 +17,7 @@ public class Snake extends BoardComponent implements Runnable {
             int row = this.game.board.getRandomRow();
             int col = this.game.board.getRandomCol();
             Field[][] fields = this.game.board.getFields();
+            // TODO: can throw null
             while (fields[row][col].getType() != FieldType.EMPTY ||
                    fields[row][col+1].getType() != FieldType.EMPTY ||
                    fields[row][col+2].getType() != FieldType.EMPTY) {
@@ -29,20 +32,21 @@ public class Snake extends BoardComponent implements Runnable {
     }
 
     private void move() {
-    	
-        this.deleteTail();
+        if (!this.makeBigger) {
+            this.deleteTail();
+        } else {
+            this.makeBigger = false;
+        }
         this.moveHead();
-        
     }
-    
+
     private void checkApple(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
 	    	if (fields[x][y].getType() == FieldType.FRUIT){
 	    		fields[x][y].setType(FieldType.EMPTY);
-	    		this.game.fruitEaten = true;
-	    		this.game.snakeBigger = true;
-	    		
+	    		// this.game.fruitEaten = true;
+	    		this.makeBigger = true;
 	    	}
     	}
     }
@@ -55,19 +59,13 @@ public class Snake extends BoardComponent implements Runnable {
 	    	}
     	}
     }
-    
-    
 
     private void deleteTail() {
         synchronized (this.game.board) {
-        	if(this.game.snakeBigger == false) {
-	            Coordinate c = this.position.get(this.position.size()-1);
-	            Field[][] fields = this.game.board.getFields();
-	            fields[c.i][c.j].setType(FieldType.EMPTY);
-	            this.position.remove(this.position.size()-1);
-        	}
-        	else
-        		this.game.snakeBigger = false;
+            Coordinate c = this.position.get(this.position.size()-1);
+            Field[][] fields = this.game.board.getFields();
+            fields[c.i][c.j].setType(FieldType.EMPTY);
+            this.position.remove(this.position.size()-1);
         }
     }
 
@@ -99,7 +97,7 @@ public class Snake extends BoardComponent implements Runnable {
     }
 
     private void addPosition(int row, int col) {
-            this.position.add(this.position.size(), new Coordinate(row, col));
+        this.position.add(this.position.size(), new Coordinate(row, col));
     }
 
     private void finished() {
@@ -131,9 +129,10 @@ public class Snake extends BoardComponent implements Runnable {
     @Override
     public void run() {
         System.out.printf("Snake started running with game at %s\n", this.game);
-        while (this.game.isOver == false) {
+        while (!this.game.isOver) {
             this.move();
             this.finished();
         }
+        System.out.println("Snake stopped running.");
     }
 }

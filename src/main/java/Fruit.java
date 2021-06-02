@@ -25,6 +25,20 @@ public class Fruit extends BoardComponent implements Runnable {
         }
     }
 
+    private boolean isEaten() {
+        Coordinate c = this.position.get(0);
+        synchronized (this.game.board) {
+            Field[][] fields = this.game.board.getFields();
+            FieldType fType = fields[c.i][c.j].getType();
+            if (fType == FieldType.SNAKE ||
+                fType == FieldType.PYTHON) {
+                return true;
+            } else {
+                return false; 
+            }
+        }
+    }
+
     private void setPosition(int row, int col) {
         if (this.position.isEmpty()) {
             this.position.add(0, new Coordinate(row, col));
@@ -63,13 +77,12 @@ public class Fruit extends BoardComponent implements Runnable {
     @Override
     public void run() {
         System.out.printf("Fruit started running with game at %s\n", this.game);
-        while(true) {
-        	while (this.game.fruitEaten == false) {
-        		this.finished();
-        	}
-        	this.spawn();
-        	this.game.fruitEaten = false;
-        	
+        while(!this.game.isOver) {
+            if (this.isEaten()) {
+                this.spawn();
+            }
+        	this.finished();
         }
+        System.out.println("Fruit stopped running.");
     }
 }

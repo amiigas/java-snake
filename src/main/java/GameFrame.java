@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 public class GameFrame extends JFrame implements KeyListener {
     public static final int SCREEN_WIDTH = 600;
     public static final int SCREEN_HEIGHT = 600;
+    final int GAME_SPEED = 150; //ms
     private Game game;
     JPanel buttonsPanel;
     ScreenPanel screenPanel;
@@ -26,27 +27,25 @@ public class GameFrame extends JFrame implements KeyListener {
         this.buttonsPanel = this.layoutButtons();
         pane.add(buttonsPanel, BorderLayout.PAGE_START);
 
-        while(true) {
-	        this.screenPanel = new ScreenPanel();
-	        this.screenPanel.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-	        pane.add(screenPanel, BorderLayout.CENTER);
-	
-	        this.pack();
-	        this.setVisible(true);
-	
-	        this.game = new Game();
-	        this.game.initialize();
-	        this.screenPanel.updateBoard(game.board);
-	        SwingUtilities.updateComponentTreeUI(this.screenPanel);
-	        startRenderLoop();
-	        this.gameOver();
-        }
+        this.screenPanel = new ScreenPanel();
+        this.screenPanel.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        pane.add(screenPanel, BorderLayout.CENTER);
+
+        this.pack();
+        this.setVisible(true);
+
+        this.game = new Game();
+        this.game.initialize();
+        this.screenPanel.updateBoard(game.board);
+        SwingUtilities.updateComponentTreeUI(this.screenPanel);
+        startRenderLoop();
+        this.gameOver();
     }
 
     private void startRenderLoop() {
-        while(this.game.isOver==false) {
+        while(!this.game.isOver) {
             try {
-                Thread.sleep(300);
+                Thread.sleep(GAME_SPEED);
                 synchronized (this.game.processed) {
                     // if no more permits == all threads finished
                     if (this.game.processed.availablePermits() == 0) {
@@ -54,7 +53,7 @@ public class GameFrame extends JFrame implements KeyListener {
                         this.screenPanel.updateBoard(game.board);
                         SwingUtilities.updateComponentTreeUI(this.screenPanel);
                         // release permits for semaphore
-                        this.game.processed.release(3);
+                        this.game.processed.release(4);
                         // signal all threads that rendering finished
                         this.game.renderLock.lock();
                         this.game.rendered.signalAll();
@@ -106,7 +105,6 @@ public class GameFrame extends JFrame implements KeyListener {
 
     private void gameOver() {
         this.createDeathFrame();
-        // game.stop();
     }
 
     private void createDeathFrame() {
