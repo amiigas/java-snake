@@ -62,6 +62,12 @@ public class Snake extends BoardComponent implements Runnable {
     	}
     }
     
+    private void checkOutOfFrame(int x, int y) {
+    	if (x > 59 || x < 0 || y > 59 || y < 0) {
+            this.game.isOver = true;
+        }
+    }
+
     private void checkCollision(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
@@ -100,6 +106,7 @@ public class Snake extends BoardComponent implements Runnable {
                 dy = 1;
             }
             Coordinate newHead = new Coordinate(c.i+dx, c.j+dy);
+            this.checkOutOfFrame(c.i+dx, c.j+dy);
             this.checkCollision(c.i+dx, c.j+dy);
             this.checkApple(c.i+dx, c.j+dy);
             this.checkFrog(c.i+dx, c.j+dy);
