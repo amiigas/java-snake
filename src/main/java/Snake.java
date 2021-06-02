@@ -46,6 +46,7 @@ public class Snake extends BoardComponent implements Runnable {
 	    	if (fields[x][y].getType() == FieldType.FRUIT){
 	    		fields[x][y].setType(FieldType.EMPTY);
 	    		this.makeBigger += 1;
+                this.game.score += 1;
 	    	}
     	}
     }
@@ -56,6 +57,7 @@ public class Snake extends BoardComponent implements Runnable {
 	    	if (fields[x][y].getType() == FieldType.FROG){
 	    		fields[x][y].setType(FieldType.EMPTY);
 	    		this.makeBigger += 3;
+                this.game.score += 3;
 	    	}
     	}
     }

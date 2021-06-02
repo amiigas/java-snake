@@ -27,20 +27,21 @@ public class GameFrame extends JFrame implements KeyListener {
         this.buttonsPanel = this.layoutButtons();
         pane.add(buttonsPanel, BorderLayout.PAGE_START);
 
-        // TODO: - restarting game
-        this.screenPanel = new ScreenPanel();
-        this.screenPanel.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        pane.add(screenPanel, BorderLayout.CENTER);
+        while(true) {
+            this.screenPanel = new ScreenPanel();
+            this.screenPanel.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+            pane.add(screenPanel, BorderLayout.CENTER);
 
-        this.pack();
-        this.setVisible(true);
+            this.pack();
+            this.setVisible(true);
 
-        this.game = new Game();
-        this.game.initialize();
-        this.screenPanel.updateBoard(game.board);
-        SwingUtilities.updateComponentTreeUI(this.screenPanel);
-        startRenderLoop();
-        this.gameOver();
+            this.game = new Game();
+            this.game.initialize();
+            this.screenPanel.updateBoard(game.board);
+            SwingUtilities.updateComponentTreeUI(this.screenPanel);
+            startRenderLoop();
+            this.gameOver();
+        }
     }
 
     private void startRenderLoop() {
@@ -67,23 +68,19 @@ public class GameFrame extends JFrame implements KeyListener {
         }
     }
 
-    private void startGame() {
-        this.game.start();
-    }
-
     private JPanel layoutButtons() {
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(1, 3));
+        buttonsPanel.setLayout(new GridLayout(1, 2));
 
         JButton newGameButton = new JButton();
         newGameButton.setText("START");
         newGameButton.setFocusable(false);
         newGameButton.addActionListener(e -> startGame());
 
-        JButton gameOverButton = new JButton();
-        gameOverButton.setText("GAME OVER");
-        gameOverButton.setFocusable(false);
-        gameOverButton.addActionListener(e -> gameOver());
+        // JButton gameOverButton = new JButton();
+        // gameOverButton.setText("NEW GAME");
+        // gameOverButton.setFocusable(false);
+        // gameOverButton.addActionListener(e -> newGame());
         
         JButton leaderboardButton = new JButton();
         leaderboardButton.setText("LEADERBOARD");
@@ -91,25 +88,34 @@ public class GameFrame extends JFrame implements KeyListener {
         leaderboardButton.addActionListener(e -> showLeaderboard());
 
         buttonsPanel.add(newGameButton);
-        buttonsPanel.add(gameOverButton);
+        // buttonsPanel.add(gameOverButton);
         buttonsPanel.add(leaderboardButton);
 
         return buttonsPanel;
     }
 
     private void showLeaderboard() {
-        if (this.leaderboardFrame != null ) {
+        if (this.leaderboardFrame != null) {
             this.leaderboardFrame.dispose();
         }
         this.leaderboardFrame = new LeaderboardFrame();
     }
+
+    private void startGame() {
+        this.game.start();
+    }
+
+    // private void newGame() {
+    //     this.game = new Game();
+    //     this.game.initialize();
+    // }
 
     private void gameOver() {
         this.createDeathFrame();
     }
 
     private void createDeathFrame() {
-        new DeathFrame();
+        new DeathFrame(this.game.score);
     }
 
     @Override

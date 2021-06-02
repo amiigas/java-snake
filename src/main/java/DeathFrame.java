@@ -16,11 +16,12 @@ public class DeathFrame extends JFrame {
     public static final int TEXTFIELD_WIDTH = 250;
     public static final int TEXTFIELD_HEIGTH = 50;
     public static final String leaderboardFilename = "leaderboard.txt";
+    private int score;
 
     JButton saveScoreButton;
     JTextField nameTextField;
 
-    DeathFrame() {
+    DeathFrame(int score) {
         this.setTitle("Game Over");
         this.setSize(FRAME_WIDTH, FRAME_HEIGTH);
         this.setResizable(false);
@@ -28,6 +29,7 @@ public class DeathFrame extends JFrame {
         this.setLayout(null);
         this.layoutComponents();
         this.setVisible(true);
+        this.score = score;
     }
 
     private void layoutComponents() {
@@ -45,7 +47,7 @@ public class DeathFrame extends JFrame {
     }
 
     private void submitScore() {
-        this.saveScore(nameTextField.getText(), 20);
+        this.saveScore(nameTextField.getText(), this.score);
         this.dispose();
     }
 
