@@ -5,10 +5,6 @@ import java.util.concurrent.locks.*;
 public class Game {
     public Board board;
     public boolean isOver = false;
-    // public boolean fruitEaten = false;
-    // public boolean frogEaten = false;
-    // public boolean snakeBigger = false;
-    // public boolean pythonBigger = false;
     public int score = 0;
     public int snakeDirection = 38;
     public int pythonDirection = 38;

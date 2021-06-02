@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Python extends BoardComponent implements Runnable {
     private Game game;
-	private boolean makeBigger = false;
+	private int makeBigger;
     private int GoUp = 0;
     private int GoDown = 0;
     private int GoLeft = 0;
@@ -13,7 +13,7 @@ public class Python extends BoardComponent implements Runnable {
         this.type = ComponentType.PYTHON;
         this.game = game;
         this.position = new ArrayList<Coordinate>();
-		this.makeBigger = false;
+		this.makeBigger = 0;
     }
 
     public void spawn() {
@@ -35,10 +35,10 @@ public class Python extends BoardComponent implements Runnable {
     }
 
     private void move() {
-    	if (!this.makeBigger) {
-            this.deleteTail();
+    	if (this.makeBigger > 0) {
+            this.makeBigger -= 1;
         } else {
-            this.makeBigger = false;
+            this.deleteTail();
         }
         this.moveHead();
     }
@@ -48,8 +48,17 @@ public class Python extends BoardComponent implements Runnable {
     		Field[][] fields = this.game.board.getFields();
 	    	if (fields[x][y].getType() == FieldType.FRUIT){
 	    		fields[x][y].setType(FieldType.EMPTY);
-	    		// this.game.fruitEaten = true;
-	    		this.makeBigger = true;
+	    		this.makeBigger += 1;
+	    	}
+    	}
+    }
+
+	private void checkFrog(int x, int y) {
+    	synchronized (this.game.board) {
+    		Field[][] fields = this.game.board.getFields();
+	    	if (fields[x][y].getType() == FieldType.FROG){
+	    		fields[x][y].setType(FieldType.EMPTY);
+	    		this.makeBigger += 3;
 	    	}
     	}
     }
@@ -68,7 +77,7 @@ public class Python extends BoardComponent implements Runnable {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
 	    	if (fields[x][y].getType() == FieldType.WALL){
-	    		wall= true;
+	    		wall = true;
 	    	}
     	}
     	return wall;
@@ -192,6 +201,7 @@ public class Python extends BoardComponent implements Runnable {
            
             Coordinate newHead = new Coordinate(c.i+dx, c.j+dy);
             this.checkApple(c.i+dx, c.j+dy);
+            this.checkFrog(c.i+dx, c.j+dy);
             fields[c.i+dx][c.j+dy].setType(FieldType.PYTHON);
             this.position.add(0, newHead);
         }

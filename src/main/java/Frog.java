@@ -36,23 +36,27 @@ public class Frog extends BoardComponent implements Runnable {
             fields[c.i][c.j].setType(FieldType.EMPTY);
 
             ArrayList<Coordinate> options = new ArrayList<Coordinate>();
-            if (c.i-1 >= 0) {
+            if (c.i-1 >= 0 && fields[c.i-1][c.j].getType() == FieldType.EMPTY) {
                 options.add(new Coordinate(c.i-1, c.j));
             }
-            if (c.i+1 <= 59) {
+            if (c.i+1 <= 59 && fields[c.i+1][c.j].getType() == FieldType.EMPTY) {
                 options.add(new Coordinate(c.i+1, c.j));
             }
-            if (c.j-1 >= 0) {
+            if (c.j-1 >= 0 && fields[c.i][c.j-1].getType() == FieldType.EMPTY) {
                 options.add(new Coordinate(c.i, c.j-1));
             }
-            if (c.j+1 <= 59) {
+            if (c.j+1 <= 59 && fields[c.i][c.j+1].getType() == FieldType.EMPTY) {
                 options.add(new Coordinate(c.i, c.j+1));
             }
 
-            int rnd = new Random().nextInt(options.size());
-            Coordinate newPos = options.get(rnd);
-            fields[newPos.i][newPos.j].setType(FieldType.FROG);
-            this.setPosition(newPos);
+            if (!options.isEmpty()) {
+                int rnd = new Random().nextInt(options.size());
+                Coordinate newPos = options.get(rnd);
+                try {
+                    fields[newPos.i][newPos.j].setType(FieldType.FROG); // TODO: - sometimes throws nullptr exception, dunno why
+                    this.setPosition(newPos);
+                } catch (NullPointerException e) {}
+            }
         }
     }
 

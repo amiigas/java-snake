@@ -27,6 +27,7 @@ public class GameFrame extends JFrame implements KeyListener {
         this.buttonsPanel = this.layoutButtons();
         pane.add(buttonsPanel, BorderLayout.PAGE_START);
 
+        // TODO: - restarting game
         this.screenPanel = new ScreenPanel();
         this.screenPanel.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         pane.add(screenPanel, BorderLayout.CENTER);
