@@ -4,3 +4,6 @@ test,0
 Zerowy,0
 Gamer,6
 Trzy,3
+okej,0
+kurcze,6
+kurczer bele,18

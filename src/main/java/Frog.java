@@ -36,17 +36,25 @@ public class Frog extends BoardComponent implements Runnable {
             fields[c.i][c.j].setType(FieldType.EMPTY);
 
             ArrayList<Coordinate> options = new ArrayList<Coordinate>();
-            if (c.i-1 >= 0 && fields[c.i-1][c.j].getType() == FieldType.EMPTY) {
-                options.add(new Coordinate(c.i-1, c.j));
+            if (c.i-1 >= 0) { 
+                if (fields[c.i-1][c.j].getType() == FieldType.EMPTY) {
+                    options.add(new Coordinate(c.i-1, c.j));
+                }
             }
-            if (c.i+1 <= 59 && fields[c.i+1][c.j].getType() == FieldType.EMPTY) {
-                options.add(new Coordinate(c.i+1, c.j));
+            if (c.i+1 <= 59) {
+                if (fields[c.i+1][c.j].getType() == FieldType.EMPTY) {
+                    options.add(new Coordinate(c.i+1, c.j));
+                }
             }
-            if (c.j-1 >= 0 && fields[c.i][c.j-1].getType() == FieldType.EMPTY) {
-                options.add(new Coordinate(c.i, c.j-1));
+            if (c.j-1 >= 0) {
+                if (fields[c.i][c.j-1].getType() == FieldType.EMPTY) {
+                    options.add(new Coordinate(c.i, c.j-1));
+                }
             }
-            if (c.j+1 <= 59 && fields[c.i][c.j+1].getType() == FieldType.EMPTY) {
-                options.add(new Coordinate(c.i, c.j+1));
+            if (c.j+1 <= 59) {
+                if (fields[c.i][c.j+1].getType() == FieldType.EMPTY) {
+                    options.add(new Coordinate(c.i, c.j+1));
+                }
             }
 
             if (!options.isEmpty()) {

@@ -10,8 +10,8 @@ public class Board {
     	cols = given_cols;
     	
     	fields = new Field[rows][cols];
-    	for (int i=0; i<rows-1;i++) {
-    		for (int j=0; j<cols-1; j++) {
+    	for (int i=0; i<rows;i++) {
+    		for (int j=0; j<cols; j++) {
     			fields[i][j] = new Field(i,j);
     		}
     	}
