@@ -71,7 +71,7 @@ public class Snake extends BoardComponent implements Runnable {
     private void checkCollision(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
-	    	if (fields[x][y].getType() == FieldType.WALL){
+	    	if (fields[x][y].getType() == FieldType.WALL || fields[x][y].getType() == FieldType.PYTHON || fields[x][y].getType() == FieldType.SNAKE){
 	    		this.game.isOver = true;
 	    	}
     	}

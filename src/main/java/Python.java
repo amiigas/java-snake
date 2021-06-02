@@ -8,6 +8,8 @@ public class Python extends BoardComponent implements Runnable {
     private int GoDown = 0;
     private int GoLeft = 0;
     private int GoRight = 0;
+//    private int PreviousX = 0;
+//    private int PreviousY = 0;
 
     public Python(Game game) {
         this.type = ComponentType.PYTHON;
@@ -76,21 +78,58 @@ public class Python extends BoardComponent implements Runnable {
     	boolean wall = false;
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
-	    	if (fields[x][y].getType() == FieldType.WALL){
+	    	if (fields[x][y].getType() == FieldType.WALL || fields[x][y].getType() == FieldType.SNAKE){
 	    		wall = true;
 	    	}
     	}
     	return wall;
     }
     
+    private boolean checkSelf(int x, int y) {
+    	boolean pyton = false;
+    	synchronized (this.game.board) {
+    		Field[][] fields = this.game.board.getFields();
+	    	if (fields[x][y].getType() == FieldType.PYTHON){
+	    		pyton = true;
+	    	}
+    	}
+    	return pyton;
+    }
+    
+    private Coordinate randomMove() {
+    	double randomMove = Math.random();
+    	int x;
+    	int y;
+    	if(randomMove < 0.25) {
+    		x = 0;
+    		y = -1;
+    	}
+    	else if(randomMove >=0.25 && randomMove <0.5) {
+    		x = 0;
+    		y = 1;
+    	}
+    	else if(randomMove >=0.5 && randomMove <0.75) {
+    		x = -1;
+    		y = 0;
+    	}
+    	else {
+    		x = 1;
+    		y = 0;
+    	}
+    	Coordinate c = new Coordinate(x, y);
+    	return c;
+    }
+    	
+    
+    
     private void decide_l_r(int i, int j) {
     	for(int k=1;k<9;k++) {
    		 if(this.checkWalls(i, j+k) == false) {
-   			this.GoDown = k;
+   			this.GoDown = k+1;
    			break;
    		 }
    		 if(this.checkWalls(i, j-k) == false) {
-   			this.GoUp = k;
+   			this.GoUp = k+1;
    			break;
    		 }
    	 }
@@ -99,11 +138,11 @@ public class Python extends BoardComponent implements Runnable {
     private void decide_u_d(int i, int j) {
     	for(int k=1;k<9;k++) {
    		 if(this.checkWalls(i+k, j) == false) {
-   			 this.GoRight = k;
+   			 this.GoRight = k+1;
    			 break;
    		 }
    		 if(this.checkWalls(i-k, j) == false) {
-   			 this.GoLeft = k;
+   			 this.GoLeft = k+1;
    			 break;
    		 }
    	 }
@@ -118,6 +157,7 @@ public class Python extends BoardComponent implements Runnable {
     		int moves_x_frog;
     		int moves_y_frog;
             Coordinate c = this.position.get(0);
+            Coordinate d = new Coordinate(-1,-1);
             Field[][] fields = this.game.board.getFields();
             Coordinate fruit = this.game.board.findType(FieldType.FRUIT);
             Coordinate frog = this.game.board.findType(FieldType.FROG);
@@ -128,22 +168,22 @@ public class Python extends BoardComponent implements Runnable {
     		int moves_x;
         	int moves_y;
     		
-            if(this.GoDown != 0) {
+            if(this.GoDown != 0 && c.j != 59 && this.checkWalls(c.i, c.j+1) == false ) {
             	this.GoDown = this.GoDown - 1;
             	dx = 0;
             	dy = 1;
             }
-            if(this.GoLeft != 0) {
+            else if(this.GoLeft != 0 && c.i !=0 && this.checkWalls(c.i-1, c.j) == false ) {
             	this.GoLeft = this.GoLeft - 1;
             	dx = -1;
             	dy = 0;
             }
-            if(this.GoUp != 0) {
+            else if(this.GoUp != 0 && c.j != 0 && this.checkWalls(c.i, c.j-1) == false ) {
             	this.GoUp = this.GoUp - 1;
-            	dx = 1;
+            	dx = 0;
             	dy = -1;
             }
-            if(this.GoRight != 0) {
+            else if(this.GoRight != 0 && c.i != 59 && this.checkWalls(c.i+1, c.j) == false ) {
             	this.GoRight = this.GoRight - 1;
             	dx = 1;
             	dy = 0;
@@ -157,49 +197,68 @@ public class Python extends BoardComponent implements Runnable {
 	            	moves_x = moves_x_frog;
 	            	moves_y = moves_y_frog;
 	            }
-	            if(Math.abs(moves_y) > Math.abs(moves_x)) {
+	            if((Math.random() > 0.5 || moves_x == 0) && moves_y !=0) {
 	            	if (moves_y < 0) {
 	                     // up
 	                     dy = -1;
-	                     if(this.checkWalls(c.i, c.j-1) == true) {
+	                     if(this.checkWalls(c.i, c.j-1) == true ) {
 	                    	 this.decide_u_d(c.i, c.j-1);
 	                    	 dy=0;
 	                    	 dx = 1;
+	                    	 if(this.checkWalls(c.i+1, c.j) == true ) {
+	                    		 dx = -1;
+	                    		 dy=0;
+	                    	 }
 	                     }
+                   
 	            	}
 	            	else if (moves_y > 0) {
 	                     // down
 	                     dy = 1;
-	                     if(this.checkWalls(c.i, c.j+1) == true) {
+	                     if(this.checkWalls(c.i, c.j+1) == true ) {
 	                    	 this.decide_u_d(c.i, c.j+1);
 	                    	 dy=0;
 	                    	 dx = -1;
 	                     }
+	                     if(this.checkWalls(c.i-1, c.j) == true ) {
+                    		 dx = 1;
+                    		 dy=0;
+                    	 }
 	            	}
 	            }
 	            else {
 	            	if (moves_x < 0) {
 	                     // left
 	                     dx = -1;
-	                     if(this.checkWalls(c.i-1, c.j) == true) {
+	                     if(this.checkWalls(c.i-1, c.j) == true ) {
 	                    	 this.decide_l_r(c.i-1, c.j);
 	                    	 dx = 0;
 	                    	 dy = 1;
-	                     }
+	                    	 if(this.checkWalls(c.i, c.j+1) == true ) {
+	                    		 dx = 0;
+	                    		 dy=-1;
+	                    	 }
+	                     }             
 	                 } 
 	            	else if (moves_x > 0) {
 	                     // right
 	                     dx = 1;
-	                     if(this.checkWalls(c.i+1, c.j) == true) {
+	                     if(this.checkWalls(c.i+1, c.j) == true ) {
 	                    	 this.decide_l_r(c.i+1, c.j);
 	                    	 dx = 0;
 	                    	 dy = -1;
-	                     }
+	                    	 if(this.checkWalls(c.i, c.j-1) == true ) {
+	                    		 dx = 0;
+	                    		 dy=1;
+	                    	 }
+	                     }       
 	                 } 
 	            }
             }
            
             Coordinate newHead = new Coordinate(c.i+dx, c.j+dy);
+//            PreviousX = dx;
+//            PreviousY = dy;
             this.checkApple(c.i+dx, c.j+dy);
             this.checkFrog(c.i+dx, c.j+dy);
             fields[c.i+dx][c.j+dy].setType(FieldType.PYTHON);
