@@ -1,6 +1,13 @@
 package main.java;
 import java.util.ArrayList;
 
+/**
+ * Board component controlled by the AI.
+ * Capable of collecting fruits and frogs. Grows on collect.
+ * @see BoardComponent
+ * @see Fruit
+ * @see Frog
+ */
 public class Python extends BoardComponent implements Runnable {
     private Game game;
 	private int makeBigger;
@@ -11,6 +18,11 @@ public class Python extends BoardComponent implements Runnable {
 //    private int PreviousX = 0;
 //    private int PreviousY = 0;
 
+	/**
+     * Creates python instance.
+     * @param game Shared game that the python lives in.
+     * @see Game
+     */
     public Python(Game game) {
         this.type = ComponentType.PYTHON;
         this.game = game;
@@ -18,6 +30,10 @@ public class Python extends BoardComponent implements Runnable {
 		this.makeBigger = 0;
     }
 
+	/**
+     * Spawns python of length 3 randomly on board in vertical position.
+     * @see Board
+     */
     public void spawn() {
         synchronized (this.game.board) {
             int row = this.game.board.getRandomRow();
@@ -36,6 +52,9 @@ public class Python extends BoardComponent implements Runnable {
         }
     }
 
+	/**
+     * Updates the python position by performing appropriate actions in single frame.
+     */
     private void move() {
     	if (this.makeBigger > 0) {
             this.makeBigger -= 1;
@@ -45,6 +64,13 @@ public class Python extends BoardComponent implements Runnable {
         this.moveHead();
     }
     
+	/** 
+     * Checks if fruit was collected.
+     * Updates the game's score and increments growth counter by 1.
+     * @param x Field's row index
+     * @param y Field's column index
+     * @see Field
+     */
     private void checkApple(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
@@ -55,6 +81,13 @@ public class Python extends BoardComponent implements Runnable {
     	}
     }
 
+	/** 
+     * Checks if frog was collected.
+     * Updates the game's score and increments growth counter by 3.
+     * @param x Field's row index
+     * @param y Field's column index
+     * @see Field
+     */
 	private void checkFrog(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
@@ -65,6 +98,9 @@ public class Python extends BoardComponent implements Runnable {
     	}
     }
 
+	/**
+     * Sets last field occupied by snake as empty.
+     */
     private void deleteTail() {
         synchronized (this.game.board) {
 			Coordinate c = this.position.get(this.position.size()-1);
@@ -74,15 +110,22 @@ public class Python extends BoardComponent implements Runnable {
         }
     }
     
+	/**
+	 * Chceck if python is on field of type WALL or SNAKE.
+	 * @param x Field's row index
+	 * @param y Field's column index
+	 * @return Returns true if python is on a field of type WALL or SNAKE, false otherwise.
+	 * @see FieldType
+	 */
     private boolean checkWalls(int x, int y) {
-    	boolean wall = false;
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
-	    	if (fields[x][y].getType() == FieldType.WALL || fields[x][y].getType() == FieldType.SNAKE){
-	    		wall = true;
+	    	if (fields[x][y].getType() == FieldType.WALL ||
+				fields[x][y].getType() == FieldType.SNAKE){
+	    		return true;
 	    	}
     	}
-    	return wall;
+    	return false;
     }
     
     private boolean checkSelf(int x, int y) {
@@ -120,8 +163,11 @@ public class Python extends BoardComponent implements Runnable {
     	return c;
     }
     	
-    
-    
+	/**
+	 * TODO
+	 * @param i
+	 * @param j
+	 */
     private void decide_l_r(int i, int j) {
     	for(int k=1;k<9;k++) {
    		 if(this.checkWalls(i, j+k) == false) {
@@ -135,6 +181,11 @@ public class Python extends BoardComponent implements Runnable {
    	 }
     }
     
+	/**
+	 * TODO
+	 * @param i
+	 * @param j
+	 */
     private void decide_u_d(int i, int j) {
     	for(int k=1;k<9;k++) {
    		 if(this.checkWalls(i+k, j) == false) {
@@ -148,6 +199,10 @@ public class Python extends BoardComponent implements Runnable {
    	 }
     }
 
+	/**
+     * Moves the python by one field.
+     * TODO: - jakie tutaj algo zostało zastosowane w jednym zdaniu
+     */
     private void moveHead() {
         synchronized (this.game.board) {
         	int dx = 0;
@@ -266,15 +321,27 @@ public class Python extends BoardComponent implements Runnable {
         }
     }
 
+	/** 
+     * Adds new element to array of coordinates occupied by python.
+     * @param row Field's row index.
+     * @param col Field's column index.
+     * @see Coordinate
+     */
     private void addPosition(int row, int col) {
             this.position.add(this.position.size(), new Coordinate(row, col));
     }
 
+	/**
+     * Signals that the thread is ready with processing.
+     */
     private void finished() {
         this.aquireProcessed();
         this.awaitRendered();
     }
 
+	/**
+     * Aquires permit from the semaphore that counts how many threads are done processing.
+     */
     private void aquireProcessed() {
         synchronized (this.game) {
             try {
@@ -285,6 +352,9 @@ public class Python extends BoardComponent implements Runnable {
         }
     }
 
+	/**
+     * Makes thread wait for a signal from the main rendering thread.
+     */
     private void awaitRendered() {
         this.game.renderLock.lock();
         try {
@@ -296,6 +366,9 @@ public class Python extends BoardComponent implements Runnable {
         }
     }
 
+	/**
+     * Starts the thread.
+     */
     @Override
     public void run() {
         System.out.printf("Python started running with game at %s\n", this.game);

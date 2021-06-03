@@ -4,6 +4,11 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Application's main frame containing controls and game board.
+ * @see ScreenPanel
+ * @see Board
+ */
 public class GameFrame extends JFrame implements KeyListener {
     public static final int SCREEN_WIDTH = 600;
     public static final int SCREEN_HEIGHT = 600;
@@ -13,6 +18,11 @@ public class GameFrame extends JFrame implements KeyListener {
     ScreenPanel screenPanel;
     LeaderboardFrame leaderboardFrame;
 
+    /**
+     * Creates frame, initializes new game and starts the render loop.
+     * @see Game
+     * @see ScreenPanel
+     */
     public GameFrame() {
         this.setTitle("Snake - Play");
         this.setLayout(new BorderLayout());
@@ -44,6 +54,10 @@ public class GameFrame extends JFrame implements KeyListener {
         }
     }
 
+    /**
+     * Renders contents of the board.
+     * Renders if all game's threads are finished and signals that they can resume.
+     */
     private void startRenderLoop() {
         while(!this.game.isOver) {
             try {
@@ -68,6 +82,10 @@ public class GameFrame extends JFrame implements KeyListener {
         }
     }
 
+    /**
+     * Creates the user inferface.
+     * @return JPanel
+     */
     private JPanel layoutButtons() {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setLayout(new GridLayout(1, 2));
@@ -88,6 +106,10 @@ public class GameFrame extends JFrame implements KeyListener {
         return buttonsPanel;
     }
 
+    /**
+     * Creates or refreshes leaderboard frame.
+     * @see LeaderboardFrame
+     */
     private void showLeaderboard() {
         if (this.leaderboardFrame != null) {
             this.leaderboardFrame.dispose();
@@ -95,10 +117,18 @@ public class GameFrame extends JFrame implements KeyListener {
         this.leaderboardFrame = new LeaderboardFrame();
     }
 
+    /**
+     * Starts the game by starting its threads.
+     * @see Game
+     */
     private void startGame() {
         this.game.start();
     }
 
+    /**
+     * Ends the game by invoking DeathScreen creation.
+     * @see DeathFrame
+     */
     private void gameOver() {
         this.createDeathFrame();
     }

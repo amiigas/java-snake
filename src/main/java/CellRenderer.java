@@ -7,7 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-
+/**
+ * Custom list cell renderer.
+ * Formats entries as name and score.
+ */
 class CellRenderer extends JLabel implements ListCellRenderer<Object> {
 
     @Override

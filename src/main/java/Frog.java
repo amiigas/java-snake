@@ -2,10 +2,21 @@ package main.java;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Moving board component that can be collected by both snake and python.
+ * Moves randomly by one field at every other frame. Worth 3 points.
+ * @see Snake
+ * @see Python
+ */
 public class Frog extends BoardComponent implements Runnable {
     private Game game;
     private boolean hopTurn;
 
+    /**
+     * Creates the Frog.
+     * @param game Shared Game object that the frog lives in.
+     * @see Game
+     */
     public Frog(Game game) {
         this.type = ComponentType.FROG;
         this.game = game;
@@ -13,6 +24,9 @@ public class Frog extends BoardComponent implements Runnable {
         this.hopTurn = true;
     }
 
+    /**
+     * Spawns the frog randomly on the board and sets its position.
+     */
     public void spawn() {
         synchronized (this.game.board) {
             int row = this.game.board.getRandomRow();
@@ -29,6 +43,9 @@ public class Frog extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Moves the frog randomly by one field.
+     */
     private void hop() {
         synchronized (this.game.board) {
             Field[][] fields = this.game.board.getFields();
@@ -68,6 +85,10 @@ public class Frog extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Checks if frog was eaten.
+     * @return boolean
+     */
     private boolean isEaten() {
         Coordinate c = this.position.get(0);
         synchronized (this.game.board) {
@@ -82,6 +103,11 @@ public class Frog extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Sets the frog position.
+     * @param row 
+     * @param col
+     */
     private void setPosition(int row, int col) {
         if (this.position.isEmpty()) {
             this.position.add(0, new Coordinate(row, col));
@@ -90,6 +116,10 @@ public class Frog extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Sets the frog position.
+     * @param c
+     */
     private void setPosition(Coordinate c) {
         if (this.position.isEmpty()) {
             this.position.add(0, c);
@@ -98,11 +128,17 @@ public class Frog extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Signals that the thread is ready with processing.
+     */
     private void finished() {
         this.aquireProcessed();
         this.awaitRendered();
     }
 
+    /**
+     * Aquires permit from the semaphore that counts how many threads are done processing.
+     */
     private void aquireProcessed() {
         synchronized (this.game) {
             try {
@@ -113,6 +149,9 @@ public class Frog extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Makes thread wait for a signal from the main rendering thread.
+     */
     private void awaitRendered() {
         this.game.renderLock.lock();
         try {
@@ -124,6 +163,9 @@ public class Frog extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Starts the thread.
+     */
     @Override
     public void run() {
         System.out.printf("Frog started running with game at %s\n", this.game);

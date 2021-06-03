@@ -1,10 +1,22 @@
 package main.java;
 import java.util.ArrayList;
 
+/**
+ * Main board component controlled by the player.
+ * Capable of collecting fruits and frogs. Grows on collect.
+ * @see BoardComponent
+ * @see Fruit
+ * @see Frog
+ */
 public class Snake extends BoardComponent implements Runnable {
     private Game game;
     private int makeBigger;
 
+    /**
+     * Creates snake instance.
+     * @param game Shared game that the snake lives in.
+     * @see Game
+     */
     public Snake(Game game) {
         this.type = ComponentType.SNAKE;
         this.game = game;
@@ -12,6 +24,10 @@ public class Snake extends BoardComponent implements Runnable {
         this.makeBigger = 0;
     }
 
+    /**
+     * Spawns snake of length 3 randomly on board in vertical position.
+     * @see Board
+     */
     public void spawn() {
         synchronized (this.game.board) {
             int row = this.game.board.getRandomRow();
@@ -30,6 +46,9 @@ public class Snake extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Updates the snake position by performing appropriate actions in single frame.
+     */
     private void move() {
         if (this.makeBigger > 0) {
             this.makeBigger -= 1;
@@ -39,6 +58,13 @@ public class Snake extends BoardComponent implements Runnable {
         this.moveHead();
     }
 
+    /** 
+     * Checks if fruit was collected.
+     * Updates the game's score and increments growth counter by 1.
+     * @param x Field's row index
+     * @param y Field's column index
+     * @see Field
+     */
     private void checkApple(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
@@ -50,6 +76,13 @@ public class Snake extends BoardComponent implements Runnable {
     	}
     }
 
+    /** 
+     * Checks if frog was collected.
+     * Updates the game's score and increments growth counter by 3.
+     * @param x Field's row index
+     * @param y Field's column index
+     * @see Field
+     */
     private void checkFrog(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
@@ -60,7 +93,15 @@ public class Snake extends BoardComponent implements Runnable {
 	    	}
     	}
     }
-    
+
+    /** 
+     * Checks if snake is out of board.
+     * @param x Field's row index
+     * @param y Field's column index
+     * @return boolean Returns true if snake is out of board, false otherwise.
+     * @see Field
+     * @see Board
+     */
     private boolean checkOutOfFrame(int x, int y) {
     	if (x > 59 || x < 0 || y > 59 || y < 0) {
             this.game.isOver = true;
@@ -69,6 +110,13 @@ public class Snake extends BoardComponent implements Runnable {
         return false;
     }
 
+    /** 
+     * Checks if snake collided with another board component.
+     * Flags game as over if supplied field is of type WALL, SNAKE or PYTHON.
+     * @param x Field's row index
+     * @param y Field's column index
+     * @see FieldType
+     */
     private void checkCollision(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
@@ -80,6 +128,9 @@ public class Snake extends BoardComponent implements Runnable {
     	}
     }
 
+    /**
+     * Sets last field occupied by snake as empty.
+     */
     private void deleteTail() {
         synchronized (this.game.board) {
             Coordinate c = this.position.get(this.position.size()-1);
@@ -89,12 +140,17 @@ public class Snake extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Moves the sanke by one field.
+     * Validates the direction, sets the field type, checks terminating conditions and collectibles.
+     */
     private void moveHead() {
         synchronized (this.game.board) {
             Coordinate c = this.position.get(0);
             Field[][] fields = this.game.board.getFields();
             int dx = 0;
             int dy = 0;
+
             if (isDirectionValid(this.game.snakeDirection, this.game.prevSnakeDirection)) {
                 this.game.prevSnakeDirection = this.game.snakeDirection;
             } else {
@@ -125,19 +181,38 @@ public class Snake extends BoardComponent implements Runnable {
         }
     }
 
-    private boolean isDirectionValid(int cur, int old) {
-        return !(Math.abs(cur - old) == 2);
+    /** 
+     * Calculates if the player's input direction is valid.
+     * Only opposite direction is considered invalid.
+     * @param d1 Proposed direction.
+     * @param d2 Current direction.
+     * @return boolean Returns true if direction is valid, false otherwise.
+     */
+    private boolean isDirectionValid(int d1, int d2) {
+        return !(Math.abs(d1 - d2) == 2);
     }
-
+    
+    /** 
+     * Adds new element to array of coordinates occupied by snake.
+     * @param row Field's row index.
+     * @param col Field's column index.
+     * @see Coordinate
+     */
     private void addPosition(int row, int col) {
         this.position.add(this.position.size(), new Coordinate(row, col));
     }
 
+    /**
+     * Signals that the thread is ready with processing.
+     */
     private void finished() {
         this.aquireProcessed();
         this.awaitRendered();
     }
 
+    /**
+     * Aquires permit from the semaphore that counts how many threads are done processing.
+     */
     private void aquireProcessed() {
         synchronized (this.game) {
             try {
@@ -148,6 +223,9 @@ public class Snake extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Makes thread wait for a signal from the main rendering thread.
+     */
     private void awaitRendered() {
         this.game.renderLock.lock();
         try {
@@ -159,6 +237,9 @@ public class Snake extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Starts the thread.
+     */
     @Override
     public void run() {
         System.out.printf("Snake started running with game at %s\n", this.game);

@@ -1,16 +1,30 @@
 package main.java;
 import java.util.ArrayList;
 
+/**
+ * Static board component that can be collected by both snake and python.
+ * Worth 1 point.
+ * @see Snake
+ * @see Python
+ */
 public class Fruit extends BoardComponent implements Runnable {
     private Game game;
     public boolean isWorking = true;
 
+    /**
+     * Creates the Friut.
+     * @param game Shared Game object that the fruit lives in.
+     * @see Game
+     */
     public Fruit(Game game) {
         this.type = ComponentType.FRUIT;
         this.game = game;
         this.position = new ArrayList<Coordinate>();
     }
 
+    /**
+     * Spawns the fruit randomly on the board and sets its position.
+     */
     public void spawn() {
         synchronized (this.game.board) {
             int row = this.game.board.getRandomRow();
@@ -25,6 +39,10 @@ public class Fruit extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Checks if fruit was eaten.
+     * @return boolean
+     */
     private boolean isEaten() {
         Coordinate c = this.position.get(0);
         synchronized (this.game.board) {
@@ -39,6 +57,11 @@ public class Fruit extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Sets the fruit position.
+     * @param row 
+     * @param col
+     */
     private void setPosition(int row, int col) {
         if (this.position.isEmpty()) {
             this.position.add(0, new Coordinate(row, col));
@@ -48,11 +71,17 @@ public class Fruit extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Signals that the thread is ready with processing.
+     */
     private void finished() {
         this.aquireProcessed();
         this.awaitRendered();
     }
 
+    /**
+     * Aquires permit from the semaphore that counts how many threads are done processing.
+     */
     private void aquireProcessed() {
         synchronized (this.game) {
             try {
@@ -63,6 +92,9 @@ public class Fruit extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Makes thread wait for a signal from the main rendering thread.
+     */
     private void awaitRendered() {
         this.game.renderLock.lock();
         try {
@@ -74,6 +106,9 @@ public class Fruit extends BoardComponent implements Runnable {
         }
     }
 
+    /**
+     * Starts the thread.
+     */
     @Override
     public void run() {
         System.out.printf("Fruit started running with game at %s\n", this.game);

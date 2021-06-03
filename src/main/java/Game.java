@@ -2,6 +2,10 @@ package main.java;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 
+/**
+ * Class containing all the information about the state of the game.
+ * Starts all the component's threads.
+ */
 public class Game {
     public Board board;
     public boolean isOver = false;
@@ -18,10 +22,19 @@ public class Game {
     Thread snakeThread;
     Thread pythonThread;
 
+    /**
+     * Creates new game instance.
+     * Initializes board.
+     * @see Board
+     */
     public Game() {
         this.board = new Board(60, 60);
     }
     
+    /**
+     * Prepares game for running.
+     * Creates threads and spawns components.
+     */
     public void initialize() {
         Fruit fruit = new Fruit(this);
         Frog frog = new Frog(this);
@@ -40,6 +53,9 @@ public class Game {
         frog.spawn();
     }
 
+    /**
+     * Starts game by starting components' threads.
+     */
     public void start() {        
         this.fruitThread.start();
         this.frogThread.start();
