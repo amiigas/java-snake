@@ -61,10 +61,12 @@ public class Snake extends BoardComponent implements Runnable {
     	}
     }
     
-    private void checkOutOfFrame(int x, int y) {
+    private boolean checkOutOfFrame(int x, int y) {
     	if (x > 59 || x < 0 || y > 59 || y < 0) {
             this.game.isOver = true;
+            return true;
         }
+        return false;
     }
 
     private void checkCollision(int x, int y) {
@@ -93,6 +95,12 @@ public class Snake extends BoardComponent implements Runnable {
             Field[][] fields = this.game.board.getFields();
             int dx = 0;
             int dy = 0;
+            if (isDirectionValid(this.game.snakeDirection, this.game.prevSnakeDirection)) {
+                this.game.prevSnakeDirection = this.game.snakeDirection;
+            } else {
+                this.game.snakeDirection = this.game.prevSnakeDirection;
+            }
+            
             if (this.game.snakeDirection == 37) {
                 // left
                 dx = -1;
@@ -107,13 +115,18 @@ public class Snake extends BoardComponent implements Runnable {
                 dy = 1;
             }
             Coordinate newHead = new Coordinate(c.i+dx, c.j+dy);
-            this.checkOutOfFrame(c.i+dx, c.j+dy);
-            this.checkCollision(c.i+dx, c.j+dy);
-            this.checkApple(c.i+dx, c.j+dy);
-            this.checkFrog(c.i+dx, c.j+dy);
-            fields[c.i+dx][c.j+dy].setType(FieldType.SNAKE);
-            this.position.add(0, newHead);
+            if (!this.checkOutOfFrame(c.i+dx, c.j+dy)) {
+                this.checkCollision(c.i+dx, c.j+dy);
+                this.checkApple(c.i+dx, c.j+dy);
+                this.checkFrog(c.i+dx, c.j+dy);
+                fields[c.i+dx][c.j+dy].setType(FieldType.SNAKE);
+                this.position.add(0, newHead);
+            }
         }
+    }
+
+    private boolean isDirectionValid(int cur, int old) {
+        return !(Math.abs(cur - old) == 2);
     }
 
     private void addPosition(int row, int col) {

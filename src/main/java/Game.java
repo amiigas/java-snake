@@ -7,6 +7,7 @@ public class Game {
     public boolean isOver = false;
     public int score = 0;
     public int snakeDirection = 38;
+    public int prevSnakeDirection = 38;
     public int pythonDirection = 38;
     final Semaphore processed = new Semaphore(4, true);
     final Lock renderLock = new ReentrantLock();
