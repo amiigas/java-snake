@@ -164,9 +164,11 @@ public class Python extends BoardComponent implements Runnable {
     }
     	
 	/**
-	 * TODO
-	 * @param i
-	 * @param j
+	 * After spotting an obstacle in front of a python, breach in obstacle is searched for,
+	 * closest gap is found and direction with number of necessary moves is writen to a 
+	 * global variable, version for vertical obstacles. 
+	 * @param i Move row index
+	 * @param j Move column index
 	 */
     private void decide_l_r(int i, int j) {
     	for(int k=1;k<9;k++) {
@@ -182,9 +184,11 @@ public class Python extends BoardComponent implements Runnable {
     }
     
 	/**
-	 * TODO
-	 * @param i
-	 * @param j
+	 * After spotting an obstacle in front of a python, breach in obstacle is searched for,
+	 * closest gap is found and direction with number of necessary moves is writen to a 
+	 * global variable, version for horizontal obstacles. 
+	 * @param i Move row index
+	 * @param j Move column index
 	 */
     private void decide_u_d(int i, int j) {
     	for(int k=1;k<9;k++) {
@@ -201,7 +205,8 @@ public class Python extends BoardComponent implements Runnable {
 
 	/**
      * Moves the python by one field.
-     * TODO: - jakie tutaj algo zostało zastosowane w jednym zdaniu
+     * If an obstacle is detected and breach is found, it is approached,
+     * otherwise python looks for a closest frog or an apple. 
      */
     private void moveHead() {
         synchronized (this.game.board) {
