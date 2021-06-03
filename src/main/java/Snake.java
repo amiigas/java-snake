@@ -15,9 +15,8 @@ public class Snake extends BoardComponent implements Runnable {
     public void spawn() {
         synchronized (this.game.board) {
             int row = this.game.board.getRandomRow();
-            int col = this.game.board.getRandomCol();
+            int col = this.game.board.getRandomCol() % 58;
             Field[][] fields = this.game.board.getFields();
-            // TODO: can throw null
             while (fields[row][col].getType() != FieldType.EMPTY ||
                    fields[row][col+1].getType() != FieldType.EMPTY ||
                    fields[row][col+2].getType() != FieldType.EMPTY) {
@@ -71,7 +70,9 @@ public class Snake extends BoardComponent implements Runnable {
     private void checkCollision(int x, int y) {
     	synchronized (this.game.board) {
     		Field[][] fields = this.game.board.getFields();
-	    	if (fields[x][y].getType() == FieldType.WALL || fields[x][y].getType() == FieldType.PYTHON || fields[x][y].getType() == FieldType.SNAKE){
+	    	if (fields[x][y].getType() == FieldType.WALL ||
+                fields[x][y].getType() == FieldType.PYTHON ||
+                fields[x][y].getType() == FieldType.SNAKE){
 	    		this.game.isOver = true;
 	    	}
     	}

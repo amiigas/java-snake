@@ -21,7 +21,7 @@ public class Python extends BoardComponent implements Runnable {
     public void spawn() {
         synchronized (this.game.board) {
             int row = this.game.board.getRandomRow();
-            int col = this.game.board.getRandomCol();
+            int col = this.game.board.getRandomCol() % 58;
             Field[][] fields = this.game.board.getFields();
             while (fields[row][col].getType() != FieldType.EMPTY ||
                    fields[row][col+1].getType() != FieldType.EMPTY ||

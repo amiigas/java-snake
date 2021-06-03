@@ -61,7 +61,7 @@ public class Frog extends BoardComponent implements Runnable {
                 int rnd = new Random().nextInt(options.size());
                 Coordinate newPos = options.get(rnd);
                 try {
-                    fields[newPos.i][newPos.j].setType(FieldType.FROG); // TODO: - sometimes throws nullptr exception, dunno why
+                    fields[newPos.i][newPos.j].setType(FieldType.FROG);
                     this.setPosition(newPos);
                 } catch (NullPointerException e) {}
             }
