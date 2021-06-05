@@ -272,9 +272,6 @@ public class Python extends BoardComponent implements Runnable {
         return d;
     }
     
-    
-    
-    
 	/**
      * Moves the python by one field.
      * If an obstacle is detected and breach is found, it is approached,
