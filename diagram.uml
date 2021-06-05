@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/Admin/eclipse-workspace/java-snake-main(3).zip_expanded/java-snake-main</OriginalElement>
+  <nodes>
+    <node x="970.3007632013203" y="724.0">main.java.Python</node>
+    <node x="899.1945132013202" y="11.0">main.java.ComponentType</node>
+    <node x="322.30076320132025" y="845.0">main.java.Frog</node>
+    <node x="1427.3548886138615" y="412.5">main.java.Score</node>
+    <node x="1402.9280115511551" y="955.5">main.java.CellRenderer</node>
+    <node x="430.3355816831682" y="1786.0">main.java.GameFrame</node>
+    <node x="1190.3548886138615" y="401.0">main.java.BoardComponent</node>
+    <node x="91.97937293729365" y="324.0">main.java.Field</node>
+    <node x="738.3007632013203" y="801.0">main.java.Snake</node>
+    <node x="937.6458333333333" y="1350.0">main.java.DeathFrame</node>
+    <node x="1411.1780115511551" y="1449.0">main.java.LeaderboardFrame</node>
+    <node x="543.3007632013203" y="867.0">main.java.Fruit</node>
+    <node x="481.3355816831682" y="2246.0">main.java.Main</node>
+    <node x="1158.6445132013203" y="66.5">main.java.Coordinate</node>
+    <node x="207.27576320132027" y="0.0">main.java.FieldType</node>
+    <node x="495.43822194719473" y="1350.0">main.java.Game</node>
+    <node x="110.55076320132025" y="1394.0">main.java.ScreenPanel</node>
+    <node x="10.5" y="867.0">main.java.Board</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="main.java.Board" target="main.java.FieldType" relationship="DEPENDENCY">
+      <point x="-81.75" y="-128.0" />
+      <point x="37.75" y="703.0" />
+      <point x="81.47937293729365" y="703.0" />
+      <point x="81.47937293729365" y="304.0" />
+      <point x="386.45076320132034" y="304.0" />
+      <point x="386.45076320132034" y="294.0" />
+      <point x="343.0257632013203" y="294.0" />
+      <point x="45.25" y="117.0" />
+    </edge>
+    <edge source="main.java.LeaderboardFrame" target="main.java.Score" relationship="CREATE">
+      <point x="-54.75" y="-84.0" />
+      <point x="1465.9280115511551" y="1328.0" />
+      <point x="1392.4280115511551" y="1328.0" />
+      <point x="1392.4280115511551" y="703.0" />
+      <point x="1497.3548886138615" y="703.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="main.java.Python" target="main.java.FieldType" relationship="DEPENDENCY">
+      <point x="0.0" y="-271.0" />
+      <point x="1068.3007632013203" y="663.0" />
+      <point x="934.8481229372937" y="663.0" />
+      <point x="934.8481229372937" y="304.0" />
+      <point x="386.45076320132034" y="304.0" />
+      <point x="386.45076320132034" y="294.0" />
+      <point x="343.0257632013203" y="294.0" />
+      <point x="45.25" y="117.0" />
+    </edge>
+    <edge source="main.java.Game" target="main.java.Fruit" relationship="CREATE">
+      <point x="-10.4375" y="-183.0" />
+      <point x="568.5007219471947" y="1328.0" />
+      <point x="572.4674298679869" y="1328.0" />
+      <point x="-58.33333333333337" y="128.0" />
+    </edge>
+    <edge source="main.java.Frog" target="main.java.Field" relationship="DEPENDENCY">
+      <point x="40.19999999999999" y="-150.0" />
+      <point x="463.00076320132024" y="703.0" />
+      <point x="483.2981229372937" y="703.0" />
+      <point x="483.2981229372937" y="623.0" />
+      <point x="223.97937293729365" y="623.0" />
+      <point x="44.0" y="139.0" />
+    </edge>
+    <edge source="main.java.CellRenderer" target="main.java.Score" relationship="DEPENDENCY">
+      <point x="0.0" y="-39.5" />
+      <point x="1648.9280115511551" y="703.0" />
+      <point x="1497.3548886138615" y="703.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="main.java.LeaderboardFrame" target="main.java.CellRenderer" relationship="CREATE">
+      <point x="54.75" y="-84.0" />
+      <point x="1575.4280115511551" y="1328.0" />
+      <point x="1648.9280115511551" y="1328.0" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="main.java.Python" target="main.java.Game" relationship="DEPENDENCY">
+      <point x="0.0" y="271.0" />
+      <point x="1068.3007632013203" y="1288.0" />
+      <point x="933.5314562706271" y="1288.0" />
+      <point x="933.5314562706271" y="1328.0" />
+      <point x="610.2507219471947" y="1328.0" />
+      <point x="31.3125" y="-183.0" />
+    </edge>
+    <edge source="main.java.GameFrame" target="main.java.Game" relationship="CREATE">
+      <point x="0.0" y="-205.0" />
+      <point x="556.3355816831681" y="1736.0" />
+      <point x="620.6882219471947" y="1736.0" />
+      <point x="41.75" y="183.0" />
+    </edge>
+    <edge source="main.java.Game" target="main.java.Python" relationship="CREATE">
+      <point x="73.0625" y="-183.0" />
+      <point x="652.0007219471947" y="1318.0" />
+      <point x="1133.6340965346535" y="1318.0" />
+      <point x="65.33333333333326" y="271.0" />
+    </edge>
+    <edge source="main.java.BoardComponent" target="main.java.ComponentType" relationship="TO_ONE">
+      <point x="-54.25" y="-62.0" />
+      <point x="1244.6048886138615" y="274.0" />
+      <point x="1061.9445132013202" y="274.0" />
+      <point x="54.25" y="106.0" />
+    </edge>
+    <edge source="main.java.Fruit" target="main.java.FieldType" relationship="DEPENDENCY">
+      <point x="-35.0" y="-128.0" />
+      <point x="595.8007632013203" y="633.0" />
+      <point x="472.2981229372937" y="633.0" />
+      <point x="472.2981229372937" y="304.0" />
+      <point x="386.45076320132034" y="304.0" />
+      <point x="386.45076320132034" y="294.0" />
+      <point x="343.0257632013203" y="294.0" />
+      <point x="45.25" y="117.0" />
+    </edge>
+    <edge source="main.java.Game" target="main.java.Snake" relationship="CREATE">
+      <point x="52.1875" y="-183.0" />
+      <point x="631.1257219471947" y="1308.0" />
+      <point x="914.967429867987" y="1308.0" />
+      <point x="70.66666666666674" y="194.0" />
+    </edge>
+    <edge source="main.java.BoardComponent" target="main.java.Coordinate" relationship="TO_MANY">
+      <point x="54.25" y="-62.0" />
+      <point x="1353.1048886138615" y="304.0" />
+      <point x="1272.6445132013203" y="304.0" />
+      <point x="38.0" y="50.5" />
+    </edge>
+    <edge source="main.java.Frog" target="main.java.ComponentType" relationship="DEPENDENCY">
+      <point x="0.0" y="-150.0" />
+      <point x="422.80076320132025" y="663.0" />
+      <point x="745.8507632013202" y="663.0" />
+      <point x="745.8507632013202" y="284.0" />
+      <point x="887.2507632013202" y="284.0" />
+      <point x="887.2507632013202" y="254.0" />
+      <point x="953.4445132013202" y="254.0" />
+      <point x="-54.25" y="106.0" />
+    </edge>
+    <edge source="main.java.Frog" target="main.java.Game" relationship="TO_ONE">
+      <point x="0.0" y="150.0" />
+      <point x="422.80076320132025" y="1298.0" />
+      <point x="581.4382219471947" y="1298.0" />
+      <point x="581.4382219471947" y="1328.0" />
+      <point x="589.3757219471947" y="1328.0" />
+      <point x="10.4375" y="-183.0" />
+    </edge>
+    <edge source="main.java.Game" target="main.java.Board" relationship="CREATE">
+      <point x="-73.0625" y="-183.0" />
+      <point x="505.87572194719473" y="1328.0" />
+      <point x="370.42801155115524" y="1328.0" />
+      <point x="370.42801155115524" y="1298.0" />
+      <point x="65.0" y="1298.0" />
+      <point x="-54.5" y="128.0" />
+    </edge>
+    <edge source="main.java.Fruit" target="main.java.Game" relationship="TO_ONE">
+      <point x="0.0" y="128.0" />
+      <point x="630.8007632013203" y="1298.0" />
+      <point x="581.4382219471947" y="1298.0" />
+      <point x="581.4382219471947" y="1328.0" />
+      <point x="589.3757219471947" y="1328.0" />
+      <point x="10.4375" y="-183.0" />
+    </edge>
+    <edge source="main.java.GameFrame" target="main.java.Game" relationship="TO_ONE">
+      <point x="-36.0" y="-205.0" />
+      <point x="520.3355816831681" y="1766.0" />
+      <point x="537.1882219471947" y="1766.0" />
+      <point x="-41.75" y="183.0" />
+    </edge>
+    <edge source="main.java.Snake" target="main.java.Game" relationship="DEPENDENCY">
+      <point x="0.0" y="194.0" />
+      <point x="844.3007632013203" y="1288.0" />
+      <point x="933.5314562706271" y="1288.0" />
+      <point x="933.5314562706271" y="1328.0" />
+      <point x="610.2507219471947" y="1328.0" />
+      <point x="31.3125" y="-183.0" />
+    </edge>
+    <edge source="main.java.Snake" target="main.java.ComponentType" relationship="DEPENDENCY">
+      <point x="84.79999999999995" y="-194.0" />
+      <point x="929.1007632013202" y="683.0" />
+      <point x="1056.8548886138615" y="683.0" />
+      <point x="1056.8548886138615" y="284.0" />
+      <point x="887.2507632013202" y="284.0" />
+      <point x="887.2507632013202" y="254.0" />
+      <point x="953.4445132013202" y="254.0" />
+      <point x="-54.25" y="106.0" />
+    </edge>
+    <edge source="main.java.Python" target="main.java.Game" relationship="TO_ONE">
+      <point x="-65.33333333333337" y="271.0" />
+      <point x="1002.9674298679869" y="1298.0" />
+      <point x="581.4382219471947" y="1298.0" />
+      <point x="581.4382219471947" y="1328.0" />
+      <point x="589.3757219471947" y="1328.0" />
+      <point x="10.4375" y="-183.0" />
+    </edge>
+    <edge source="main.java.Field" target="main.java.FieldType" relationship="TO_ONE">
+      <point x="-44.0" y="-139.0" />
+      <point x="135.97937293729365" y="294.0" />
+      <point x="252.52576320132027" y="294.0" />
+      <point x="-45.25" y="117.0" />
+    </edge>
+    <edge source="main.java.Python" target="main.java.Field" relationship="DEPENDENCY">
+      <point x="-78.39999999999998" y="-271.0" />
+      <point x="989.9007632013203" y="703.0" />
+      <point x="483.2981229372937" y="703.0" />
+      <point x="483.2981229372937" y="623.0" />
+      <point x="223.97937293729365" y="623.0" />
+      <point x="44.0" y="139.0" />
+    </edge>
+    <edge source="main.java.Game" target="main.java.Board" relationship="TO_ONE">
+      <point x="-52.1875" y="-183.0" />
+      <point x="526.7507219471947" y="1318.0" />
+      <point x="381.42801155115524" y="1318.0" />
+      <point x="381.42801155115524" y="1288.0" />
+      <point x="174.0" y="1288.0" />
+      <point x="54.5" y="128.0" />
+    </edge>
+    <edge source="main.java.Game" target="main.java.Frog" relationship="CREATE">
+      <point x="-31.3125" y="-183.0" />
+      <point x="547.6257219471947" y="1308.0" />
+      <point x="355.80076320132025" y="1308.0" />
+      <point x="-67.0" y="150.0" />
+    </edge>
+    <edge source="main.java.Frog" target="main.java.FieldType" relationship="DEPENDENCY">
+      <point x="-80.39999999999998" y="-150.0" />
+      <point x="342.4007632013203" y="633.0" />
+      <point x="362.7981229372937" y="633.0" />
+      <point x="362.7981229372937" y="304.0" />
+      <point x="386.45076320132034" y="304.0" />
+      <point x="386.45076320132034" y="294.0" />
+      <point x="343.0257632013203" y="294.0" />
+      <point x="45.25" y="117.0" />
+    </edge>
+    <edge source="main.java.GameFrame" target="main.java.ScreenPanel" relationship="CREATE">
+      <point x="-108.0" y="-205.0" />
+      <point x="448.3355816831682" y="1766.0" />
+      <point x="165.55076320132025" y="1766.0" />
+      <point x="-55.0" y="139.0" />
+    </edge>
+    <edge source="main.java.Board" target="main.java.Field" relationship="TO_MANY">
+      <point x="-27.25" y="-128.0" />
+      <point x="92.25" y="703.0" />
+      <point x="135.97937293729365" y="703.0" />
+      <point x="-44.0" y="139.0" />
+    </edge>
+    <edge source="main.java.Fruit" target="main.java.Field" relationship="DEPENDENCY">
+      <point x="-70.0" y="-128.0" />
+      <point x="560.8007632013203" y="703.0" />
+      <point x="483.2981229372937" y="703.0" />
+      <point x="483.2981229372937" y="623.0" />
+      <point x="223.97937293729365" y="623.0" />
+      <point x="44.0" y="139.0" />
+    </edge>
+    <edge source="main.java.Snake" target="main.java.BoardComponent" relationship="GENERALIZATION">
+      <point x="-42.40000000000009" y="-194.0" />
+      <point x="801.9007632013202" y="693.0" />
+      <point x="768.7522483498349" y="693.0" />
+      <point x="768.7522483498349" y="643.0" />
+      <point x="1298.8548886138615" y="643.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="main.java.Fruit" target="main.java.BoardComponent" relationship="GENERALIZATION">
+      <point x="70.0" y="-128.0" />
+      <point x="700.8007632013203" y="693.0" />
+      <point x="768.7522483498349" y="693.0" />
+      <point x="768.7522483498349" y="643.0" />
+      <point x="1298.8548886138615" y="643.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="main.java.ScreenPanel" target="main.java.FieldType" relationship="DEPENDENCY">
+      <point x="-82.5" y="-139.0" />
+      <point x="138.05076320132025" y="1328.0" />
+      <point x="0.0" y="1328.0" />
+      <point x="0.0" y="304.0" />
+      <point x="386.45076320132034" y="304.0" />
+      <point x="386.45076320132034" y="294.0" />
+      <point x="343.0257632013203" y="294.0" />
+      <point x="45.25" y="117.0" />
+    </edge>
+    <edge source="main.java.GameFrame" target="main.java.LeaderboardFrame" relationship="CREATE">
+      <point x="108.0" y="-205.0" />
+      <point x="664.3355816831681" y="1766.0" />
+      <point x="1575.4280115511551" y="1766.0" />
+      <point x="54.75" y="84.0" />
+    </edge>
+    <edge source="main.java.Fruit" target="main.java.Coordinate" relationship="CREATE">
+      <point x="0.0" y="-128.0" />
+      <point x="630.8007632013203" y="673.0" />
+      <point x="811.1548886138614" y="673.0" />
+      <point x="811.1548886138614" y="294.0" />
+      <point x="756.8507632013202" y="294.0" />
+      <point x="756.8507632013202" y="264.0" />
+      <point x="1196.6445132013203" y="264.0" />
+      <point x="-38.0" y="50.5" />
+    </edge>
+    <edge source="main.java.ScreenPanel" target="main.java.Board" relationship="CREATE">
+      <point x="27.5" y="-139.0" />
+      <point x="248.05076320132025" y="1328.0" />
+      <point x="370.42801155115524" y="1328.0" />
+      <point x="370.42801155115524" y="1298.0" />
+      <point x="65.0" y="1298.0" />
+      <point x="-54.5" y="128.0" />
+    </edge>
+    <edge source="main.java.Snake" target="main.java.Coordinate" relationship="CREATE">
+      <point x="42.39999999999998" y="-194.0" />
+      <point x="886.7007632013202" y="673.0" />
+      <point x="998.7007632013202" y="673.0" />
+      <point x="998.7007632013202" y="294.0" />
+      <point x="756.8507632013202" y="294.0" />
+      <point x="756.8507632013202" y="264.0" />
+      <point x="1196.6445132013203" y="264.0" />
+      <point x="-38.0" y="50.5" />
+    </edge>
+    <edge source="main.java.Board" target="main.java.Coordinate" relationship="CREATE">
+      <point x="27.25" y="-128.0" />
+      <point x="146.75" y="643.0" />
+      <point x="511.9007632013203" y="643.0" />
+      <point x="511.9007632013203" y="294.0" />
+      <point x="756.8507632013202" y="294.0" />
+      <point x="756.8507632013202" y="264.0" />
+      <point x="1196.6445132013203" y="264.0" />
+      <point x="-38.0" y="50.5" />
+    </edge>
+    <edge source="main.java.Python" target="main.java.Coordinate" relationship="CREATE">
+      <point x="39.200000000000045" y="-271.0" />
+      <point x="1107.5007632013203" y="693.0" />
+      <point x="1168.8548886138615" y="693.0" />
+      <point x="1168.8548886138615" y="294.0" />
+      <point x="756.8507632013202" y="294.0" />
+      <point x="756.8507632013202" y="264.0" />
+      <point x="1196.6445132013203" y="264.0" />
+      <point x="-38.0" y="50.5" />
+    </edge>
+    <edge source="main.java.Frog" target="main.java.Game" relationship="DEPENDENCY">
+      <point x="67.0" y="150.0" />
+      <point x="489.80076320132025" y="1288.0" />
+      <point x="933.5314562706271" y="1288.0" />
+      <point x="933.5314562706271" y="1328.0" />
+      <point x="610.2507219471947" y="1328.0" />
+      <point x="31.3125" y="-183.0" />
+    </edge>
+    <edge source="main.java.Main" target="main.java.GameFrame" relationship="CREATE">
+      <point x="0.0" y="-39.5" />
+      <point x="0.0" y="205.0" />
+    </edge>
+    <edge source="main.java.Python" target="main.java.BoardComponent" relationship="GENERALIZATION">
+      <point x="-39.200000000000045" y="-271.0" />
+      <point x="1029.1007632013202" y="693.0" />
+      <point x="768.7522483498349" y="693.0" />
+      <point x="768.7522483498349" y="643.0" />
+      <point x="1298.8548886138615" y="643.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="main.java.Fruit" target="main.java.ComponentType" relationship="DEPENDENCY">
+      <point x="35.0" y="-128.0" />
+      <point x="665.8007632013203" y="683.0" />
+      <point x="822.1548886138614" y="683.0" />
+      <point x="822.1548886138614" y="284.0" />
+      <point x="887.2507632013202" y="284.0" />
+      <point x="887.2507632013202" y="254.0" />
+      <point x="953.4445132013202" y="254.0" />
+      <point x="-54.25" y="106.0" />
+    </edge>
+    <edge source="main.java.GameFrame" target="main.java.ScreenPanel" relationship="TO_ONE">
+      <point x="-72.0" y="-205.0" />
+      <point x="484.3355816831682" y="1756.0" />
+      <point x="275.55076320132025" y="1756.0" />
+      <point x="55.0" y="139.0" />
+    </edge>
+    <edge source="main.java.Field" target="main.java.FieldType" relationship="DEPENDENCY">
+      <point x="44.0" y="-139.0" />
+      <point x="223.97937293729365" y="304.0" />
+      <point x="386.45076320132034" y="304.0" />
+      <point x="386.45076320132034" y="294.0" />
+      <point x="343.0257632013203" y="294.0" />
+      <point x="45.25" y="117.0" />
+    </edge>
+    <edge source="main.java.Snake" target="main.java.Game" relationship="TO_ONE">
+      <point x="-70.66666666666663" y="194.0" />
+      <point x="773.6340965346536" y="1298.0" />
+      <point x="581.4382219471947" y="1298.0" />
+      <point x="581.4382219471947" y="1328.0" />
+      <point x="589.3757219471947" y="1328.0" />
+      <point x="10.4375" y="-183.0" />
+    </edge>
+    <edge source="main.java.Python" target="main.java.ComponentType" relationship="DEPENDENCY">
+      <point x="78.40000000000009" y="-271.0" />
+      <point x="1146.7007632013203" y="703.0" />
+      <point x="1179.8548886138615" y="703.0" />
+      <point x="1179.8548886138615" y="284.0" />
+      <point x="887.2507632013202" y="284.0" />
+      <point x="887.2507632013202" y="254.0" />
+      <point x="953.4445132013202" y="254.0" />
+      <point x="-54.25" y="106.0" />
+    </edge>
+    <edge source="main.java.ScreenPanel" target="main.java.Field" relationship="DEPENDENCY">
+      <point x="-27.5" y="-139.0" />
+      <point x="193.05076320132025" y="1308.0" />
+      <point x="311.80076320132025" y="1308.0" />
+      <point x="311.80076320132025" y="703.0" />
+      <point x="483.2981229372937" y="703.0" />
+      <point x="483.2981229372937" y="623.0" />
+      <point x="223.97937293729365" y="623.0" />
+      <point x="44.0" y="139.0" />
+    </edge>
+    <edge source="main.java.Frog" target="main.java.Coordinate" relationship="CREATE">
+      <point x="-40.19999999999999" y="-150.0" />
+      <point x="382.60076320132026" y="653.0" />
+      <point x="511.9007632013203" y="653.0" />
+      <point x="511.9007632013203" y="294.0" />
+      <point x="756.8507632013202" y="294.0" />
+      <point x="756.8507632013202" y="264.0" />
+      <point x="1196.6445132013203" y="264.0" />
+      <point x="-38.0" y="50.5" />
+    </edge>
+    <edge source="main.java.Snake" target="main.java.Field" relationship="DEPENDENCY">
+      <point x="-84.80000000000007" y="-194.0" />
+      <point x="759.5007632013202" y="703.0" />
+      <point x="483.2981229372937" y="703.0" />
+      <point x="483.2981229372937" y="623.0" />
+      <point x="223.97937293729365" y="623.0" />
+      <point x="44.0" y="139.0" />
+    </edge>
+    <edge source="main.java.GameFrame" target="main.java.DeathFrame" relationship="CREATE">
+      <point x="36.0" y="-205.0" />
+      <point x="592.3355816831681" y="1746.0" />
+      <point x="1036.6458333333333" y="1746.0" />
+      <point x="0.0" y="183.0" />
+    </edge>
+    <edge source="main.java.Fruit" target="main.java.Game" relationship="DEPENDENCY">
+      <point x="58.33333333333337" y="128.0" />
+      <point x="689.1340965346536" y="1288.0" />
+      <point x="933.5314562706271" y="1288.0" />
+      <point x="933.5314562706271" y="1328.0" />
+      <point x="610.2507219471947" y="1328.0" />
+      <point x="31.3125" y="-183.0" />
+    </edge>
+    <edge source="main.java.Snake" target="main.java.FieldType" relationship="DEPENDENCY">
+      <point x="0.0" y="-194.0" />
+      <point x="844.3007632013203" y="653.0" />
+      <point x="697.9481229372936" y="653.0" />
+      <point x="697.9481229372936" y="304.0" />
+      <point x="386.45076320132034" y="304.0" />
+      <point x="386.45076320132034" y="294.0" />
+      <point x="343.0257632013203" y="294.0" />
+      <point x="45.25" y="117.0" />
+    </edge>
+    <edge source="main.java.Frog" target="main.java.BoardComponent" relationship="GENERALIZATION">
+      <point x="80.39999999999998" y="-150.0" />
+      <point x="503.2007632013202" y="693.0" />
+      <point x="768.7522483498349" y="693.0" />
+      <point x="768.7522483498349" y="643.0" />
+      <point x="1298.8548886138615" y="643.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="main.java.ScreenPanel" target="main.java.Board" relationship="TO_ONE">
+      <point x="82.5" y="-139.0" />
+      <point x="303.05076320132025" y="1318.0" />
+      <point x="381.42801155115524" y="1318.0" />
+      <point x="381.42801155115524" y="1288.0" />
+      <point x="174.0" y="1288.0" />
+      <point x="54.5" y="128.0" />
+    </edge>
+    <edge source="main.java.Board" target="main.java.Field" relationship="CREATE">
+      <point x="81.75" y="-128.0" />
+      <point x="201.25" y="703.0" />
+      <point x="483.2981229372937" y="703.0" />
+      <point x="483.2981229372937" y="623.0" />
+      <point x="223.97937293729365" y="623.0" />
+      <point x="44.0" y="139.0" />
+    </edge>
+    <edge source="main.java.GameFrame" target="main.java.LeaderboardFrame" relationship="TO_ONE">
+      <point x="72.0" y="-205.0" />
+      <point x="628.3355816831681" y="1756.0" />
+      <point x="1465.9280115511551" y="1756.0" />
+      <point x="-54.75" y="84.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5499999999999999" showDependencies="true" x="762.2857142857142" y="589.0909090909091" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
