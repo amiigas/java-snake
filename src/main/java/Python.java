@@ -204,29 +204,88 @@ public class Python extends BoardComponent implements Runnable {
     }
 
 	/**
+     * Moves the python by one field with standard algorithm.
+     * Closer frog or fruit is found and approached. Randomly chooses 
+     * coordinate and checks whether wall is on the way.
+     * @param c Current position
+     * @param dx Change in x-coordinate
+     * @param dy Change in y-coordinate
+     */
+    private Coordinate standardMove(Coordinate c, int dx, int dy) {
+    	Coordinate fruit = this.game.board.findType(FieldType.FRUIT);
+        Coordinate frog = this.game.board.findType(FieldType.FROG);
+    	int moves_x_fruit = fruit.i - c.i;
+		int moves_y_fruit = fruit.j - c.j;
+		int moves_x_frog = frog.i - c.i;
+		int moves_y_frog = frog.j - c.j;
+		int moves_x;
+    	int moves_y;
+    	if(Math.abs(moves_x_fruit)+Math.abs(moves_y_fruit) < Math.abs(moves_x_frog)+Math.abs(moves_y_frog)) {
+        	moves_x = moves_x_fruit;
+        	moves_y = moves_y_fruit;
+        }
+        else {
+        	moves_x = moves_x_frog;
+        	moves_y = moves_y_frog;
+        }
+        if((Math.random() > 0.5 || moves_x == 0) && moves_y !=0) {
+        	if (moves_y < 0) {
+                 dy = -1;
+                 if(this.checkWalls(c.i, c.j-1) == true ) {
+                	 this.decide_u_d(c.i, c.j-1);
+                	 dy=0;
+                	 dx = 1;
+                	 if(this.checkWalls(c.i+1, c.j) == true ) {dx = -1;}
+                 }
+        	}
+        	else if (moves_y > 0) {
+                 dy = 1;
+                 if(this.checkWalls(c.i, c.j+1) == true ) {
+                	 this.decide_u_d(c.i, c.j+1);
+                	 dy=0;
+                	 dx = -1;
+                 }
+                 if(this.checkWalls(c.i-1, c.j) == true ) {dx = 1;}
+        	}
+        }
+        else {
+        	if (moves_x < 0) {
+                 dx = -1;
+                 if(this.checkWalls(c.i-1, c.j) == true ) {
+                	 this.decide_l_r(c.i-1, c.j);
+                	 dx = 0;
+                	 dy = 1;
+                	 if(this.checkWalls(c.i, c.j+1) == true ) {dy=-1;}
+                 }             
+             } 
+        	else if (moves_x > 0) {
+                 dx = 1;
+                 if(this.checkWalls(c.i+1, c.j) == true ) {
+                	 this.decide_l_r(c.i+1, c.j);
+                	 dx = 0;
+                	 dy = -1;
+                	 if(this.checkWalls(c.i, c.j-1) == true ) {dy=1;}
+                 }       
+             } 
+        }
+        Coordinate d = new Coordinate(dx, dy);
+        return d;
+    }
+    
+    
+    
+    
+	/**
      * Moves the python by one field.
      * If an obstacle is detected and breach is found, it is approached,
-     * otherwise python looks for a closest frog or an apple. 
+     * otherwise python performs standard move
      */
     private void moveHead() {
         synchronized (this.game.board) {
         	int dx = 0;
             int dy = 0;
-            int moves_x_fruit;
-    		int moves_y_fruit;
-    		int moves_x_frog;
-    		int moves_y_frog;
             Coordinate c = this.position.get(0);
-            Coordinate d = new Coordinate(-1,-1);
             Field[][] fields = this.game.board.getFields();
-            Coordinate fruit = this.game.board.findType(FieldType.FRUIT);
-            Coordinate frog = this.game.board.findType(FieldType.FROG);
-            moves_x_fruit = fruit.i - c.i;
-    		moves_y_fruit = fruit.j - c.j;
-    		moves_x_frog = frog.i - c.i;
-    		moves_y_frog = frog.j - c.j;
-    		int moves_x;
-        	int moves_y;
     		
             if(this.GoDown != 0 && c.j != 59 && this.checkWalls(c.i, c.j+1) == false ) {
             	this.GoDown = this.GoDown - 1;
@@ -249,76 +308,11 @@ public class Python extends BoardComponent implements Runnable {
             	dy = 0;
             }
             else {
-	            if(Math.abs(moves_x_fruit)+Math.abs(moves_y_fruit) < Math.abs(moves_x_frog)+Math.abs(moves_y_frog)) {
-	            	moves_x = moves_x_fruit;
-	            	moves_y = moves_y_fruit;
-	            }
-	            else {
-	            	moves_x = moves_x_frog;
-	            	moves_y = moves_y_frog;
-	            }
-	            if((Math.random() > 0.5 || moves_x == 0) && moves_y !=0) {
-	            	if (moves_y < 0) {
-	                     // up
-	                     dy = -1;
-	                     if(this.checkWalls(c.i, c.j-1) == true ) {
-	                    	 this.decide_u_d(c.i, c.j-1);
-	                    	 dy=0;
-	                    	 dx = 1;
-	                    	 if(this.checkWalls(c.i+1, c.j) == true ) {
-	                    		 dx = -1;
-	                    		 dy=0;
-	                    	 }
-	                     }
-                   
-	            	}
-	            	else if (moves_y > 0) {
-	                     // down
-	                     dy = 1;
-	                     if(this.checkWalls(c.i, c.j+1) == true ) {
-	                    	 this.decide_u_d(c.i, c.j+1);
-	                    	 dy=0;
-	                    	 dx = -1;
-	                     }
-	                     if(this.checkWalls(c.i-1, c.j) == true ) {
-                    		 dx = 1;
-                    		 dy=0;
-                    	 }
-	            	}
-	            }
-	            else {
-	            	if (moves_x < 0) {
-	                     // left
-	                     dx = -1;
-	                     if(this.checkWalls(c.i-1, c.j) == true ) {
-	                    	 this.decide_l_r(c.i-1, c.j);
-	                    	 dx = 0;
-	                    	 dy = 1;
-	                    	 if(this.checkWalls(c.i, c.j+1) == true ) {
-	                    		 dx = 0;
-	                    		 dy=-1;
-	                    	 }
-	                     }             
-	                 } 
-	            	else if (moves_x > 0) {
-	                     // right
-	                     dx = 1;
-	                     if(this.checkWalls(c.i+1, c.j) == true ) {
-	                    	 this.decide_l_r(c.i+1, c.j);
-	                    	 dx = 0;
-	                    	 dy = -1;
-	                    	 if(this.checkWalls(c.i, c.j-1) == true ) {
-	                    		 dx = 0;
-	                    		 dy=1;
-	                    	 }
-	                     }       
-	                 } 
-	            }
+	            Coordinate d = this.standardMove(c, dx, dy);
+	            dx = d.i;
+	            dy = d.j;
             }
-           
             Coordinate newHead = new Coordinate(c.i+dx, c.j+dy);
-//            PreviousX = dx;
-//            PreviousY = dy;
             this.checkApple(c.i+dx, c.j+dy);
             this.checkFrog(c.i+dx, c.j+dy);
             fields[c.i+dx][c.j+dy].setType(FieldType.PYTHON);
